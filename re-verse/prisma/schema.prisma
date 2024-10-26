@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model Users {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  first_name  String
+  last_name   String
+  created_At  DateTime @default(now())
+  dob         DateTime
+  profile_pik String?
+  gender      String?
+
+  //one-to-one rship to Streak
+  streak   Streak?
+  streakId Int? //foreign key for streak
+
+  // articles Articles[]   //one-to-many rship to Articles 
+  notification Notifications[]
+  // trivias Trivias[]
+
+  //One-to-many rship for messages sent and received 
+  sentMessages     Messages[] @relation("SentMessages")
+  receivedMessages Messages[] @relation("ReceivedMessages")
+}
+
+model Articles {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean  @default(false)
+  // author Users @relation(fields: [authorId],references: [id])
+  authorId  Int
+  createdAt DateTime @default(now())
+}
+
+model Lessons {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model Streak {
+  id     Int    @id @default(autoincrement())
+  count  Int    @default(0)
+  user   Users? @relation(fields: [userId], references: [id])
+  userId Int?   @unique
+}
+
+model Messages {
+  id      Int      @id @default(autoincrement())
+  content String
+  sentAt  DateTime @default(now())
+
+  sender   Users @relation("SentMessages", fields: [senderId], references: [id])
+  senderId Int
+
+  receiver   Users @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  receiverId Int
+}
+
+model Trivias {
+  id        Int      @id @default(autoincrement())
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+}
+
+model Notifications {
+  id        Int      @id @default(autoincrement())
+  message   String
+  seen      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  userId    Int
+  user      Users    @relation(fields: [userId], references: [id])
+}

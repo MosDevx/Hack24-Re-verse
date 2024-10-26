@@ -12,7 +12,7 @@ export function ContentCard({theme, verseOfTheDay,writeUp}) {
         )}
       >
         <div className="absolute w-full h-full top-0 left-0 transition duration-300 group-hover/card:bg-black opacity-60"></div>
-        <div className="flex flex-row items-center bg-red-100 justify-center space-x-4 z-10">
+        <div className="flex flex-row items-center justify-center space-x-4 z-10">
  
           <div className="flex items-center justify-center flex-col">
           <h1 className="font-bold text-xl md:text-2xl text-gray-50 relative z-10">
@@ -23,7 +23,7 @@ export function ContentCard({theme, verseOfTheDay,writeUp}) {
           </p>
           </div>
         </div>
-        <div className="bg-red-100">
+        <div className="">
         <p className="font-bold text-md text-gray-50 relative z-10">
            {writeUp}
           </p>

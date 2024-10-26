@@ -1,7 +1,7 @@
 // app/about/layout.js
-export default function LandingPageLayout({ children }) {
+export default function LeaderBoardLayout({ children }) {
   return (
-    <div className="">
+    <div className="mt-20">
       
       <section className="">{children}</section>
     </div>

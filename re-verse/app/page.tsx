@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { FocusCards } from "@/components/ui/focus-cards";
-import Navbar from "../app/Navbar/Navbar";
 
 export default function Home() {
   const samples = [{
@@ -14,7 +13,6 @@ export default function Home() {
   return (
     <div>
       <FocusCards cards={samples} />
-      <Navbar className="top-2" />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { FocusCards } from "@/components/ui/focus-cards";
+import Navbar from "../app/Navbar/Navbar";
+
 export default function Home() {
   const samples = [{
     title: "IconBible",
@@ -10,7 +12,9 @@ export default function Home() {
   }]
 
   return (
-    <FocusCards cards={samples} />
-
+    <div>
+      <FocusCards cards={samples} />
+      <Navbar className="top-2" />
+    </div>
   );
 }

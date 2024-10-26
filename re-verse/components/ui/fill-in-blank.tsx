@@ -31,14 +31,9 @@ const FillInTheBlank: React.FC<FillInTheBlankProps> = ({ question, correctAnswer
 	};
 
 	useEffect(() => {
-		if (showResult) {
 			setUserAnswer('');
-			const timer = setTimeout(() => {
-				setShowResult(false);
-			}, 1300); // Adjust the timeout duration as needed
 
-			return () => clearTimeout(timer);
-		}
+
 	}, [showResult]);
 
 	return (
@@ -57,7 +52,7 @@ const FillInTheBlank: React.FC<FillInTheBlankProps> = ({ question, correctAnswer
 			>
 				Submit
 			</button>
-			{showResult && (
+			{/* {showResult && (
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
@@ -68,7 +63,7 @@ const FillInTheBlank: React.FC<FillInTheBlankProps> = ({ question, correctAnswer
 				>
 					{isCorrect ? 'Correct!' : 'Incorrect, try again.'}
 				</motion.div>
-			)}
+			)} */}
 		</div>
 	);
 };

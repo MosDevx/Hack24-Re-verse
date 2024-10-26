@@ -7,7 +7,7 @@ interface TriviaLayoutProps {
 
 export default function TriviaLayout({ children }: TriviaLayoutProps) {
   return (
-    <div >
+    <div  >
       <section className="">{children}</section>
     </div>
   );

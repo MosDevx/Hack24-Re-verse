@@ -9,14 +9,9 @@ export const MultipleChoiceQuestion = ({ question, options, correctAnswer,onAnsw
 	// const [userAnswer, setUserAnswer] = useState('');
 
 	useEffect(() => {
-		if (showResult) {
-			setSelectedOption(null);
-			const timer = setTimeout(() => {
-				setShowResult(false);
-			}, 1300); // Adjust the timeout duration as needed
 
-			return () => clearTimeout(timer);
-		}
+			setSelectedOption(null);
+	
 	}, [showResult]);
 
 	const handleOptionChange = (event) => {
@@ -46,7 +41,7 @@ export const MultipleChoiceQuestion = ({ question, options, correctAnswer,onAnsw
 					</div>
 				))}
 			</form>
-			{showResult && (
+			{/* {showResult && (
 						<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
@@ -57,7 +52,7 @@ export const MultipleChoiceQuestion = ({ question, options, correctAnswer,onAnsw
 				>
 					{isCorrect ? 'Correct!' : 'Incorrect, try again.'}
 				</motion.div>
-			)}
+			)} */}
 		</div>
 	);
 };

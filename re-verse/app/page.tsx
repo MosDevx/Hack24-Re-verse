@@ -1,6 +1,9 @@
 import Image from "next/image";
 import { FocusCards } from "@/components/ui/focus-cards";
-import {ContentCard} from '@/components/ui/content-card'
+import {Hero} from "@/components/ui/Hero-section/hero"
+import { Trivia} from "@/components/ui/Trivia-section/Trivia"
+import { Signup } from "@/components/ui/Auth/signup";
+import { All } from "@/components/ui/All/all";
 
 export default function Home() {
   const samples = [{
@@ -13,8 +16,10 @@ export default function Home() {
 
   return (
     <div>
-      <FocusCards cards={samples} />
-      {/* <ContentCard/> */}
+      <Hero />
+      <Trivia />
+      <All />
     </div>
+      
   );
 }

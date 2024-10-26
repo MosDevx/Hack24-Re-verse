@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 interface FillInTheBlankProps {
 	question: string;
@@ -8,20 +9,37 @@ interface FillInTheBlankProps {
 	onAnswer: (isCorrect: boolean | null, userAnswer: string) => void;
 }
 
-const FillInTheBlank: React.FC<FillInTheBlankProps> = ({ question, correctAnswer ,onAnswer}) => {
+const FillInTheBlank: React.FC<FillInTheBlankProps> = ({ question, correctAnswer, onAnswer }) => {
 	const [userAnswer, setUserAnswer] = useState('');
 	const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+	const [showResult, setShowResult] = useState(false);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setUserAnswer(e.target.value);
 	};
 
-	const checkAnswer = (userAnswer: string) => {
+	const checkAnswer = () => {
 		const regex = new RegExp(correctAnswer, 'i');
-		setIsCorrect(regex.test(userAnswer));
-		console.log("result",isCorrect)
-		onAnswer(isCorrect,userAnswer);
+		const result = regex.test(userAnswer);
+		setIsCorrect(result);
+		onAnswer(result, userAnswer);
+		setShowResult(true);
+
+		if (result) {
+			setUserAnswer('');
+		}
 	};
+
+	useEffect(() => {
+		if (showResult) {
+			setUserAnswer('');
+			const timer = setTimeout(() => {
+				setShowResult(false);
+			}, 1300); // Adjust the timeout duration as needed
+
+			return () => clearTimeout(timer);
+		}
+	}, [showResult]);
 
 	return (
 		<div className="p-4 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
@@ -39,10 +57,17 @@ const FillInTheBlank: React.FC<FillInTheBlankProps> = ({ question, correctAnswer
 			>
 				Submit
 			</button>
-			{isCorrect !== null && (
-				<div className={`mt-4 p-2 rounded ${isCorrect ? 'bg-green-200' : 'bg-red-200'}`}>
+			{showResult && (
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					className={`mt-4 p-2 rounded ${
+						isCorrect ? 'bg-green-200' : 'bg-red-200'
+					}`}
+				>
 					{isCorrect ? 'Correct!' : 'Incorrect, try again.'}
-				</div>
+				</motion.div>
 			)}
 		</div>
 	);

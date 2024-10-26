@@ -1,16 +1,30 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
+import { motion } from 'framer-motion';
 
 export const MultipleChoiceQuestion = ({ question, options, correctAnswer,onAnswer }) => {
 	const [selectedOption, setSelectedOption] = useState(null);
 	const [isCorrect, setIsCorrect] = useState(false);
+	const [showResult, setShowResult] = useState(false);
 	// const [userAnswer, setUserAnswer] = useState('');
+
+	useEffect(() => {
+		if (showResult) {
+			setSelectedOption(null);
+			const timer = setTimeout(() => {
+				setShowResult(false);
+			}, 1300); // Adjust the timeout duration as needed
+
+			return () => clearTimeout(timer);
+		}
+	}, [showResult]);
 
 	const handleOptionChange = (event) => {
 		setSelectedOption(event.target.value);
 		setIsCorrect(event.target.value === correctAnswer);
 		onAnswer(isCorrect,event.target.value )
-		
+		setShowResult(true)
+
 	};
 
 	return (
@@ -32,10 +46,17 @@ export const MultipleChoiceQuestion = ({ question, options, correctAnswer,onAnsw
 					</div>
 				))}
 			</form>
-			{selectedOption && (
-				<p className={`mt-4 ${isCorrect ? 'text-green-500' : 'text-red-500'}`}>
-					{isCorrect ? 'Correct!' : 'Incorrect'}
-				</p>
+			{showResult && (
+						<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					className={`mt-4 p-2 rounded ${
+						isCorrect ? 'bg-green-200' : 'bg-red-200'
+					}`}
+				>
+					{isCorrect ? 'Correct!' : 'Incorrect, try again.'}
+				</motion.div>
 			)}
 		</div>
 	);

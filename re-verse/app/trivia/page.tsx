@@ -48,9 +48,9 @@ import TrueFalse from '@/components/ui/true-false';
 
 
 	const questions = [
-		{ type: 'fill-in-blank', question: 'The capital of France is ___.', answer: 'Paris' },
-		{ type: 'fill-in-blank', question: 'The largest planet in our solar system is ___.', answer: 'Jupiter' },
-		{ type: 'fill-in-blank', question: 'The chemical symbol for water is ___.', answer: 'H2O' },
+		// { type: 'fill-in-blank', question: 'The capital of France is ___.', answer: 'Paris' },
+		// { type: 'fill-in-blank', question: 'The largest planet in our solar system is ___.', answer: 'Jupiter' },
+		// { type: 'fill-in-blank', question: 'The chemical symbol for water is ___.', answer: 'H2O' },
 		{ type: 'multiple-choice', question: 'What is the capital of Italy?', options: ['Rome', 'Paris', 'Berlin', 'Madrid'], answer: 'Rome' },
 		{ type: 'multiple-choice', question: 'Which planet is known as the Red Planet?', options: ['Earth', 'Mars', 'Jupiter', 'Saturn'], answer: 'Mars' },
 		{ type: 'multiple-choice', question: 'What is the largest mammal?', options: ['Elephant', 'Blue Whale', 'Giraffe', 'Rhino'], answer: 'Blue Whale' },
@@ -93,6 +93,7 @@ import TrueFalse from '@/components/ui/true-false';
 
 		const handleAnswer = (isCorrect: boolean, userAnswer:boolean) => {
 			
+			console.log('fromhandle ', isCorrect)
 			const currentQuestion = questions[currentQuestionIndex];
 			// const isCorrect = userAnswer === currentQuestion.answer;
 
@@ -144,6 +145,7 @@ import TrueFalse from '@/components/ui/true-false';
 				<h1>Trivia Questions</h1>
 				{renderQuestion()}
 				<button 	className="bg-blue-500 text-white p-2 rounded w-full" onClick={handleSkip}>Skip</button>
+				
 				<p>Score: {score}</p>
 			</div>
 

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { FocusCards } from "@/components/ui/focus-cards";
+import {ContentCard} from '@/components/ui/content-card'
 
 export default function Home() {
   const samples = [{
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <div>
       <FocusCards cards={samples} />
+      {/* <ContentCard/> */}
     </div>
   );
 }

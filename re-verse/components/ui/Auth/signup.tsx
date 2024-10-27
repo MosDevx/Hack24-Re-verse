@@ -19,9 +19,13 @@ export function Signup() {
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
         Welcome to  re<span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-fuchsia-600">-Verse</span>
       </h2>
-      <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Login to your account
+      <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300 inline-block">
+        Already have an account?
       </p>
+      <a
+        href="/login"
+        className="text-blue-600 dark:text-blue-400 text-sm font-medium"> Login
+      </a>
 
       <form className="my-8" onSubmit={handleSubmit}>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
@@ -68,7 +72,7 @@ export function Signup() {
           >
             <IconBrandFacebook className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
             <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-              GitHub
+              Facebook
             </span>
             <BottomGradient />
           </button>
@@ -88,7 +92,7 @@ export function Signup() {
           >
             <IconBrandApple className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
             <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-              OnlyFans
+              Apple
             </span>
             <BottomGradient />
           </button>

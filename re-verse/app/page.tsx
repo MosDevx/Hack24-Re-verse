@@ -4,6 +4,7 @@ import {Hero} from "@/components/ui/Hero-section/hero"
 import { Trivia} from "@/components/ui/Trivia-section/Trivia"
 import { Signup } from "@/components/ui/Auth/signup";
 import { All } from "@/components/ui/All/all";
+import { HeroTrial } from "@/components/ui/Hero-section/herotrial";
 
 export default function Home() {
   const samples = [{
@@ -17,8 +18,10 @@ export default function Home() {
   return (
     <div>
       <Hero />
+      <HeroTrial />
       <Trivia />
       <All />
+      {/* <BottomNav /> */}
     </div>
       
   );

@@ -41,7 +41,7 @@ const DummyContent = ({ levels,questionsArray }: { levels: Level[] }) => {
 
 export default function Home() {
   const [existingStages, setExistingStages] = useState<Stage[]>([]); // Stores stages
-  const [selectedStage, setSelectedStage] = useState<number >(1); // Stores the selected stage ID
+  const [selectedStage, setSelectedStage] = useState<number | null >(null); // Stores the selected stage ID
   const [levels, setLevels] = useState<Level[]>([]); // Stores the levels for the selected stage
 
   // Fetch stages on component mount
@@ -54,7 +54,7 @@ export default function Home() {
 	setSelectedStage(1);
 	console.log(levels);
 	const fetchLevels = async () => {
-        const levelsData = await getStageLevels(selectedStage+1);
+        const levelsData = await getStageLevels(selectedStage);
 		console.log(selectedStage);
 		console.log(levelsData);
         setLevels(levelsData);

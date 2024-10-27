@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-const ProfilePicture = () => {
+const ProfilePicture = ({name}:{name:string}) => {
   return (
     <div className="flex justify-center mb-6">
       <div className="flex flex-col items-center">
@@ -13,7 +13,7 @@ const ProfilePicture = () => {
           alt={"profile"}
           className="rounded-full"
         />
-        <h1 className="text-gray-500 mt-2 lg:mt-4 text-sm lg:text-base">Kamau Maina</h1>
+        <h1 className="text-gray-500 mt-2 lg:mt-4 text-sm lg:text-base">{name}</h1>
       </div>
     </div>
   );

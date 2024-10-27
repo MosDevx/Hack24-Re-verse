@@ -9,24 +9,24 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
 }
 
 model Users {
-  id          Int      @id @default(autoincrement())
-  email       String   @unique
-  first_name  String
-  last_name   String
-  created_At  DateTime @default(now())
-  dob         DateTime
-  profile_pik String?
-  gender      String?
-  progress    Int?
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  first_name   String
+  last_name    String
+  created_At   DateTime @default(now())
+  dob          DateTime
+  profile_pik  String?
+  gender       String?
+  progress     Int?
   trivia_score Int?
   //one-to-one rship to Streak
-  streak   Streak?
-  streakId Int? //foreign key for streak
+  streak       Streak?
+  streakId     Int? //foreign key for streak
 
   // articles Articles[]   //one-to-many rship to Articles 
   notification Notifications[]
@@ -81,7 +81,7 @@ model Trivia {
   createdAt DateTime @default(now())
 
   // One-to-many relationship with Trivia
-  choices   Choice[]
+  choices Choice[]
 }
 
 model Notifications {
@@ -94,65 +94,65 @@ model Notifications {
 }
 
 model Course {
-  id         Int      @id @default(autoincrement())
-  name       String   // Name of the course
+  id          Int      @id @default(autoincrement())
+  name        String // Name of the course
   description String? // Description of the course
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   // One-to-many relationship with Stage
-  stages     Stage[]
+  stages Stage[]
 }
 
 model Stage {
-  id         Int      @id @default(autoincrement())
-  name       String   // Name of the stage (e.g. Beginner, Intermediate, Expert)
-  course     Course   @relation(fields: [courseId], references: [id])
-  courseId   Int
-  createdAt  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  name      String // Name of the stage (e.g. Beginner, Intermediate, Expert)
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  Int
+  createdAt DateTime @default(now())
 
   // One-to-many relationship with Level
-  levels     Level[]
+  levels Level[]
 }
 
 model Level {
-  id         Int      @id @default(autoincrement())
-  title      String   // Title of the level
+  id          Int      @id @default(autoincrement())
+  title       String // Title of the level
   description String? // Description of the level
-  content    String   // Content for the level
-  stage      Stage    @relation(fields: [stageId], references: [id])
-  stageId    Int
-  createdAt  DateTime @default(now())
+  content     String // Content for the level
+  stage       Stage    @relation(fields: [stageId], references: [id])
+  stageId     Int
+  createdAt   DateTime @default(now())
 
   // One-to-many relationship with LevelTrivia
-  trivias    LevelTrivia[]
+  trivias LevelTrivia[]
 }
 
 model LevelTrivia {
-  id         Int      @id @default(autoincrement())
-  question   String   // Trivia question
-  answer     String   // Correct answer
-  type       String   // Type of trivia (e.g. Multiple Choice, True or False)
-  level      Level    @relation(fields: [levelId], references: [id])
-  levelId    Int
-  createdAt  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  question  String // Trivia question
+  answer    String // Correct answer
+  type      String // Type of trivia (e.g. Multiple Choice, True or False)
+  level     Level    @relation(fields: [levelId], references: [id])
+  levelId   Int
+  createdAt DateTime @default(now())
 
   // One-to-many relationship with Option
-  options    Option[]
+  options Option[]
 }
 
-model Option{
-  id         Int      @id @default(autoincrement())
-  option     String
-  levelTrivia LevelTrivia @relation(fields: [levelTriviaId], references: [id])
+model Option {
+  id            Int         @id @default(autoincrement())
+  option        String
+  levelTrivia   LevelTrivia @relation(fields: [levelTriviaId], references: [id])
   levelTriviaId Int
-  createdAt  DateTime @default(now())
+  createdAt     DateTime    @default(now())
 }
 
 model Choice {
-  id         Int      @id @default(autoincrement())
-  choice     String
-  Trivia Trivia @relation(fields: [TriviaId], references: [id])
-  TriviaId Int
-  createdAt  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  choice    String
+  Trivia    Trivia   @relation(fields: [TriviaId], references: [id])
+  TriviaId  Int
+  createdAt DateTime @default(now())
 }

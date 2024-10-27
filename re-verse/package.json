@@ -16,6 +16,7 @@
     "@vercel/postgres": "^0.10.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "firebase": "^11.0.1",
     "framer-motion": "^11.11.10",
     "next": "15.0.1",
     "react": "18",

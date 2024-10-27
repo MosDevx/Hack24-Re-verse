@@ -4,12 +4,16 @@ import { Label } from "@/components/ui/Auth/label";
 import { Input } from "@/components/ui/Auth/input";
 import { cn } from "@/lib/utils";
 import { IconBrandFacebook, IconBrandGoogle, IconBrandApple } from "@tabler/icons-react";
+import googleAuth from "@/components/ui/Auth/firebaseAuth";
 
 export function Login() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted");
   };
+  function google_auth(){
+    googleAuth()
+  }
 
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black mt-15">
@@ -50,6 +54,7 @@ export function Login() {
           <button
             className="relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
             type="submit"
+            onClick={google_auth}
           >
             <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
             <span className="text-neutral-700 dark:text-neutral-300 text-sm">Google</span>

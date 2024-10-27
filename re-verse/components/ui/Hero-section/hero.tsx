@@ -35,7 +35,7 @@ export function Hero() {
               whileTap={{ scale: 0.95 }}
               className="w-40 h-12 rounded-xl bg-black text-white text-sm hover:bg-gray-800 transition duration-300"
             >
-              Join now
+              Log In
             </motion.button>
           </Link>
           <Link href="/signup" passHref>
@@ -44,7 +44,7 @@ export function Hero() {
               whileTap={{ scale: 0.95 }}
               className="w-40 h-12 rounded-xl bg-white text-black border border-black text-sm hover:bg-gray-200 transition duration-300"
             >
-              Signup
+              Sign Up
             </motion.button>
           </Link>
         </div>

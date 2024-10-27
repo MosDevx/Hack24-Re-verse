@@ -17,18 +17,18 @@ import { motion } from 'framer-motion';
 
 
 	const questions = [
-		// { type: 'fill-in-blank', question: 'The capital of France is ___.', answer: 'Paris' },
-		// { type: 'fill-in-blank', question: 'The largest planet in our solar system is ___.', answer: 'Jupiter' },
-		// { type: 'fill-in-blank', question: 'The chemical symbol for water is ___.', answer: 'H2O' },
-		// { type: 'multiple-choice', question: 'What is the capital of Italy?', options: ['Rome', 'Paris', 'Berlin', 'Madrid'], answer: 'Rome' },
-		// { type: 'multiple-choice', question: 'Which planet is known as the Red Planet?', options: ['Earth', 'Mars', 'Jupiter', 'Saturn'], answer: 'Mars' },
-		// { type: 'multiple-choice', question: 'What is the largest mammal?', options: ['Elephant', 'Blue Whale', 'Giraffe', 'Rhino'], answer: 'Blue Whale' },
+		{ type: 'fill-in-blank', question: 'The capital of France is ___.', answer: 'Paris' },
+		{ type: 'fill-in-blank', question: 'The largest planet in our solar system is ___.', answer: 'Jupiter' },
+		{ type: 'fill-in-blank', question: 'The chemical symbol for water is ___.', answer: 'H2O' },
+		{ type: 'multiple-choice', question: 'What is the capital of Italy?', options: ['Rome', 'Paris', 'Berlin', 'Madrid'], answer: 'Rome' },
+		{ type: 'multiple-choice', question: 'Which planet is known as the Red Planet?', options: ['Earth', 'Mars', 'Jupiter', 'Saturn'], answer: 'Mars' },
+		{ type: 'multiple-choice', question: 'What is the largest mammal?', options: ['Elephant', 'Blue Whale', 'Giraffe', 'Rhino'], answer: 'Blue Whale' },
 		{ type: 'true-false', question: 'The Earth is flat.', answer: false },
 		{ type: 'true-false', question: 'The sun rises in the east.', answer: true },
 		{ type: 'true-false', question: 'Humans can breathe underwater without any equipment.', answer: false }
 	];
 
-	export default function Home() {
+	export default function LessonQuestions() {
 		const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 		const [score, setScore] = useState(0);
 		const [isCorrectAnswer, setIsCorrectAnswer] = useState(0);
@@ -63,7 +63,7 @@ import { motion } from 'framer-motion';
 	
 		if (isFinished) {
 			return (
-				<div className="flex flex-col items-center justify-center h-screen">
+				<div className="flex flex-col items-center  justify-center h-screen">
 					<h1 className="text-4xl font-bold mb-4">Your Score: {score} out of {questions.length}</h1>
 					<button 
 						onClick={handleSubmitScore} 
@@ -95,7 +95,9 @@ import { motion } from 'framer-motion';
 				setCurrentQuestionIndex(currentQuestionIndex + 1);
 			} else {
 				setIsFinished(true)
-				//! Submit answers to backend
+
+
+				//!! Submit answers to backend
 				// fetch('/api/submit-answers', {
 				// 	method: 'POST',
 				// 	headers: {
@@ -133,7 +135,7 @@ import { motion } from 'framer-motion';
 
 		return (
 			<div className="flex flex-col items-center  justify-center h-screen" >
-				<h1 style={{ textAlign: 'center', fontSize: '3rem' }}>Trivia Questions</h1>
+				<h1 style={{ textAlign: 'center', fontSize: '3rem' }}>Revision Questions</h1>
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
 
 				{renderQuestion()}
@@ -152,7 +154,7 @@ import { motion } from 'framer-motion';
 					{isCorrectAnswer ? 'Correct!' : 'Incorrect, try again.'}
 				</motion.div>
 			)}
-				<p>Score: {score}</p>
+				<p className="text-xl font-semibold mt-4">Score: {score}</p>
 			</div>
 			</div>
 

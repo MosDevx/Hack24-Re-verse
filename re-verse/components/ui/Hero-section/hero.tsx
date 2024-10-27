@@ -55,9 +55,15 @@ export function Hero() {
           initial={{ opacity: 0.5, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8, ease: "easeInOut" }}
-          className="w-full max-w-[640px] h-auto object-contain shadow-lg rounded-lg"
+          className="w-full max-w-[640px] h-auto  object-contain shadow-lg rounded-lg"
         >
-          <Image src={HeroImage} alt="hero" layout="responsive" />
+          <Image 
+            className="w-full h-auto object-cover rounded-lg" 
+            src={HeroImage} 
+            alt="hero" 
+            layout="responsive" 
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </motion.div>
       </div>
     </div>

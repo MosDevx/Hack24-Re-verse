@@ -41,7 +41,7 @@ export function Trivia() {
             <CardItem
               translateZ={20}
               as={Link}
-              href="#"
+              href="/trivia"
               target="__blank"
               className="px-4 py-2 rounded-xl text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline"
             >
@@ -50,6 +50,7 @@ export function Trivia() {
             <CardItem
               translateZ={20}
               as="button"
+              a href="/signup"
               className="px-4 py-2 rounded-xl bg-blue-600 dark:bg-blue-500 text-white text-xs font-bold hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-300"
             >
               Sign up

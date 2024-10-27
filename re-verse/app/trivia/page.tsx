@@ -17,12 +17,12 @@ import { motion } from 'framer-motion';
 
 
 	const questions = [
-		// { type: 'fill-in-blank', question: 'The capital of France is ___.', answer: 'Paris' },
-		// { type: 'fill-in-blank', question: 'The largest planet in our solar system is ___.', answer: 'Jupiter' },
-		// { type: 'fill-in-blank', question: 'The chemical symbol for water is ___.', answer: 'H2O' },
-		// { type: 'multiple-choice', question: 'What is the capital of Italy?', options: ['Rome', 'Paris', 'Berlin', 'Madrid'], answer: 'Rome' },
-		// { type: 'multiple-choice', question: 'Which planet is known as the Red Planet?', options: ['Earth', 'Mars', 'Jupiter', 'Saturn'], answer: 'Mars' },
-		// { type: 'multiple-choice', question: 'What is the largest mammal?', options: ['Elephant', 'Blue Whale', 'Giraffe', 'Rhino'], answer: 'Blue Whale' },
+		{ type: 'fill-in-blank', question: " What's the capital of Farnce? ", answer: 'Paris' },
+		{ type: 'fill-in-blank', question: "What's the largest planet in our solar system? ", answer: 'Jupiter' },
+		{ type: 'fill-in-blank', question: "What's the chemical symbol for water? ", answer: 'H2O' },
+		{ type: 'multiple-choice', question: 'What is the capital of Italy?', options: ['Rome', 'Paris', 'Berlin', 'Madrid'], answer: 'Rome' },
+		{ type: 'multiple-choice', question: 'Which planet is known as the Red Planet?', options: ['Earth', 'Mars', 'Jupiter', 'Saturn'], answer: 'Mars' },
+		{ type: 'multiple-choice', question: 'What is the largest mammal?', options: ['Elephant', 'Blue Whale', 'Giraffe', 'Rhino'], answer: 'Blue Whale' },
 		{ type: 'true-false', question: 'The Earth is flat.', answer: false },
 		{ type: 'true-false', question: 'The sun rises in the east.', answer: true },
 		{ type: 'true-false', question: 'Humans can breathe underwater without any equipment.', answer: false }

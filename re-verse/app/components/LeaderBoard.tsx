@@ -1,14 +1,50 @@
-import React from "react";
+"use client";
+
+import { getUsers } from "@/lib/reverse";
+import React, { useEffect, useState } from "react";
+
+interface User {
+  dob: Date;
+  email: string;
+  first_name: string;
+  gender: string | null;
+  id: number;
+  last_name: string;
+  profile_pik: string | null;
+  progress: number | null;
+  streakId: string | null;
+  trivia_score: number | null;
+}
 
 const Leaderboard = () => {
-  // Sample player data
-  const players = [
-    { id: 1, name: "Player Name", score: 3050, position: "🥇" },
-    { id: 2, name: "Player Name", score: 2955, position: "🥈" },
-    { id: 3, name: "Player Name", score: 2649, position: "🥉" },
-    { id: 4, name: "Player Name", score: 2403 },
-    { id: 5, name: "Player Name", score: 2396 },
-  ];
+  const [players, setPlayers] = useState<User[]>([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const results: User[] = (await getUsers()) as User[];
+      setPlayers(results);
+    };
+
+    fetchUsers();
+  }, []);
+
+  // Function to calculate player positions based on trivia score
+  const getSortedPlayers = (players: User[]) => {
+    // Sort players by trivia score in descending order
+    const sortedPlayers = players.sort((a, b) => {
+      return (b.trivia_score || 0) - (a.trivia_score || 0);
+    });
+
+    // Assign positions, considering ties
+    return sortedPlayers.map((player, index) => ({
+      ...player,
+      position: index + 1,
+      medal: index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : "",
+    }));
+  };
+
+  // Get players with assigned positions and medals
+  const rankedPlayers = getSortedPlayers(players);
 
   return (
     <div className="flex flex-col items-center space-y-4 mt-2 w-full">
@@ -25,14 +61,16 @@ const Leaderboard = () => {
             </tr>
           </thead>
           <tbody>
-            {players.map((player, index) => (
+            {rankedPlayers.map((player, index) => (
               <tr
                 key={player.id}
                 className={`${index % 2 === 0 ? "bg-gray-800" : "bg-gray-700"}`}
               >
-                <td className="p-2 lg:p-3">{player.position || index + 1}</td>
-                <td className="p-2 lg:p-3">{player.name}</td>
-                <td className="p-2 lg:p-3 text-right">{player.score}</td>
+                <td className="p-2 lg:p-3">
+                  {player.medal || player.position}
+                </td>
+                <td className="p-2 lg:p-3">{player.first_name}</td>
+                <td className="p-2 lg:p-3 text-right">{player.trivia_score}</td>
               </tr>
             ))}
           </tbody>

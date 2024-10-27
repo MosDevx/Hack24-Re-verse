@@ -25,7 +25,7 @@ export function Hero() {
           <button className="w-40 h-12 rounded-xl bg-black text-white text-sm hover:bg-gray-800 transition duration-300">
             Join now
           </button>
-            <Link href="@/components/ui/Auth/signup" passHref>
+            <Link href="/signup" passHref>
               <button className="w-40 h-12 rounded-xl bg-white text-black border border-black text-sm hover:bg-gray-200 transition duration-300">
                 Signup
               </button>

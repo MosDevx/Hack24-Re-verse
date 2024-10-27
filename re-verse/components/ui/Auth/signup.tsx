@@ -1,6 +1,5 @@
 "use client";
 import React, { FormEvent, useState } from "react";
-import React, { FormEvent, useState } from "react";
 import { Label } from "@/components/ui/Auth/label";
 import { Input } from "@/components/ui/Auth/input";
 import { cn } from "@/lib/utils";
@@ -19,8 +18,6 @@ export function Signup() {
   const [error ,setError] =useState<string |null>(null);
   const [fname, setFname] =useState("")
   const [lname, setLname] =useState("")
-  const [fname, setFname] =useState("")
-  const [lname, setLname] =useState("")
   const app =initializeApp(firebaseConfig)
   const auth = getAuth(app);
 
@@ -33,7 +30,6 @@ export function Signup() {
       return;
     }
     try{
-      // console.log("Registration Details:", email, password)
       // console.log("Registration Details:", email, password)
       const userCredential =await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered:", userCredential.user);
@@ -49,12 +45,6 @@ export function Signup() {
       }
 
       // Automatically sign in the user
-      // const user = userCredential.user;
-      // if (user) {
-      //   console.log('User signed in:', user);
-      //   // Redirect or navigate to dashboard after login
-      //   //  
-      // }
       // const user = userCredential.user;
       // if (user) {
       //   console.log('User signed in:', user);
@@ -89,22 +79,18 @@ export function Signup() {
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
             <Input id="firstname" placeholder="John" type="text" onChange={(e) => setFname(e.target.value)} />
-            <Input id="firstname" placeholder="John" type="text" onChange={(e) => setFname(e.target.value)} />
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Doe" type="text" onChange={(e) => setLname(e.target.value)} />
             <Input id="lastname" placeholder="Doe" type="text" onChange={(e) => setLname(e.target.value)} />
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
           <Input id="email" placeholder="projectmayhem@fc.com" type="email" onChange={(e) => setEmail(e.target.value)} />
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" onChange={(e) => setEmail(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" onChange={(e) => setPassword(e.target.value)} />
           <Input id="password" placeholder="••••••••" type="password" onChange={(e) => setPassword(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
@@ -112,7 +98,6 @@ export function Signup() {
           <Input
             id="comfirm password"
             placeholder="••••••••"
-            type="password"
             type="password"
             onChange={(e) => setConfirmPassword(e.target.value)}
 
@@ -143,7 +128,6 @@ export function Signup() {
           <button
             className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
             type="submit"
-            onClick={google_auth}
             onClick={google_auth}
           >
             <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />

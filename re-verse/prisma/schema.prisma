@@ -22,7 +22,8 @@ model Users {
   dob         DateTime
   profile_pik String?
   gender      String?
-
+  progress    Int?
+  trivia_score Int?
   //one-to-one rship to Streak
   streak   Streak?
   streakId Int? //foreign key for streak
@@ -72,11 +73,15 @@ model Messages {
   receiverId Int
 }
 
-model Trivias {
+model Trivia {
   id        Int      @id @default(autoincrement())
   question  String
   answer    String
+  type      String
   createdAt DateTime @default(now())
+
+  // One-to-many relationship with Trivia
+  choices   Choice[]
 }
 
 model Notifications {
@@ -127,7 +132,27 @@ model LevelTrivia {
   id         Int      @id @default(autoincrement())
   question   String   // Trivia question
   answer     String   // Correct answer
+  type       String   // Type of trivia (e.g. Multiple Choice, True or False)
   level      Level    @relation(fields: [levelId], references: [id])
   levelId    Int
+  createdAt  DateTime @default(now())
+
+  // One-to-many relationship with Option
+  options    Option[]
+}
+
+model Option{
+  id         Int      @id @default(autoincrement())
+  option     String
+  levelTrivia LevelTrivia @relation(fields: [levelTriviaId], references: [id])
+  levelTriviaId Int
+  createdAt  DateTime @default(now())
+}
+
+model Choice {
+  id         Int      @id @default(autoincrement())
+  choice     String
+  Trivia Trivia @relation(fields: [TriviaId], references: [id])
+  TriviaId Int
   createdAt  DateTime @default(now())
 }

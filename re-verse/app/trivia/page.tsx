@@ -6,13 +6,7 @@ import FillInTheBlank from '@/components/ui/fill-in-blank';
 import MultipleChoice from  '@/components/ui/multiple-choice'
 import TrueFalse from '@/components/ui/true-false';
 import { motion } from 'framer-motion';
-
-
-
-
-
-
-
+import { getTrivias, updateUserTriviaScore } from '@/lib/reverse';
 
 
 
@@ -28,7 +22,16 @@ import { motion } from 'framer-motion';
 		{ type: 'true-false', question: 'Humans can breathe underwater without any equipment.', answer: false }
 	];
 
+	interface Question {
+		answer: string;
+		id: number;
+		options: string[];
+		question: string;
+		type: string;
+	  }
+
 	export default function Home() {
+		const [questions, setQuestions] = useState<Question[]>([]);
 		const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 		const [score, setScore] = useState(0);
 		const [isCorrectAnswer, setIsCorrectAnswer] = useState(0);
@@ -51,15 +54,23 @@ import { motion } from 'framer-motion';
 
 
 		const handleSubmitScore = async () => {
-			await router.push('/leaderboard');
-			await fetch('/api/scores', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ score, userAnswers }),
-			});
-		};
+			try {
+			  await updateUserTriviaScore(1);
+			  console.log("done");
+			} catch (error) {
+			  console.log(error);
+			}
+		  };
+
+		useEffect(() => {
+			const fetchQuestions = async () => {
+			  const result: Question[] = await getTrivias();
+			  console.log(result);
+			  setQuestions(result);
+			};
+		
+			fetchQuestions();
+		  }, []);
 	
 		if (isFinished) {
 			return (

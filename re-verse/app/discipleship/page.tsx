@@ -40,16 +40,39 @@ const DummyContent = ({ levels, questionsArray }: { levels: Level[], questionsAr
 };
 
 export default function Home() {
-  const [existingStages, setExistingStages] = useState<Stage[]>([]);
-  const [selectedStage, setSelectedStage] = useState<number>(1);
-  const [levels, setLevels] = useState<Level[]>([]);
+  const [existingStages, setExistingStages] = useState<Stage[]>([]); // Stores stages
+  const [selectedStage, setSelectedStage] = useState<number | null >(null); // Stores the selected stage ID
+  const [levels, setLevels] = useState<Level[]>([]); // Stores the levels for the selected stage
 
+  // Fetch stages on component mount
   useEffect(() => {
-    const fetchLevels = async () => {
-      const levelsData = await getStageLevels(selectedStage + 1);
-      setLevels(levelsData);
-    };
-    fetchLevels();
+    // const fetchStages = async () => {
+    //   const stages = await getStages();
+    //   setExistingStages(stages);
+    // };
+    // fetchStages();
+	setSelectedStage(1);
+	console.log(levels);
+	const fetchLevels = async () => {
+        const levelsData = await getStageLevels(selectedStage);
+		console.log(selectedStage);
+		console.log(levelsData);
+        setLevels(levelsData);
+      };
+	  fetchLevels();
+  }, []);
+
+  // Fetch levels based on the selected stage
+  useEffect(() => {
+    if (selectedStage !== null) {
+      const fetchLevels = async () => {
+        const levelsData = await getStageLevels(selectedStage+1);
+		console.log(selectedStage);
+		console.log(levelsData);
+        setLevels(levelsData);
+      };
+      fetchLevels();
+    }
   }, [selectedStage]);
 
   const tabs = [

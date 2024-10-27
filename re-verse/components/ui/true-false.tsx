@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 interface TrueFalseQuestionProps {
 	question: string;
-	correctAnswer: boolean;
+	correctAnswer: string;
 	onAnswer: (isCorrect: boolean | null, userAnswer: string | boolean) => void;
 }
 
@@ -25,7 +25,7 @@ const TrueFalseQuestion: React.FC<TrueFalseQuestionProps> = ({ question, correct
 
 	const handleAnswer = (answer: boolean) => {
 		setSelectedAnswer(answer);
-		const isCorrectAnswer = answer === correctAnswer;
+		const isCorrectAnswer = (answer.toString().toLowerCase()) === correctAnswer;
 		setIsCorrect(isCorrectAnswer)
 		onAnswer(isCorrectAnswer, answer);
 		setShowResult(true);

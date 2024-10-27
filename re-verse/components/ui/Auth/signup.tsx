@@ -1,6 +1,5 @@
 "use client";
 import React, { FormEvent, useState } from "react";
-import React, { FormEvent, useState } from "react";
 import { Label } from "@/components/ui/Auth/label";
 import { Input } from "@/components/ui/Auth/input";
 import { cn } from "@/lib/utils";
@@ -22,8 +21,6 @@ export function Signup() {
   const [error ,setError] =useState<string |null>(null);
   const [fname, setFname] =useState("")
   const [lname, setLname] =useState("")
-  const [fname, setFname] =useState("")
-  const [lname, setLname] =useState("")
   const app =initializeApp(firebaseConfig)
   const auth = getAuth(app);
 
@@ -36,7 +33,6 @@ export function Signup() {
       return;
     }
     try{
-      // console.log("Registration Details:", email, password)
       // console.log("Registration Details:", email, password)
       const userCredential =await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered:", userCredential.user);
@@ -83,12 +79,6 @@ export function Signup() {
       //   // Redirect or navigate to dashboard after login
       //   //  
       // }
-      // const user = userCredential.user;
-      // if (user) {
-      //   console.log('User signed in:', user);
-      //   // Redirect or navigate to dashboard after login
-      //   //  
-      // }
     }catch(error: any){
       console.error("Error signing up:", error.message);
       setError(error.message);
@@ -117,11 +107,9 @@ export function Signup() {
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
             <Input id="firstname" placeholder="John" type="text" onChange={(e) => setFname(e.target.value)} />
-            <Input id="firstname" placeholder="John" type="text" onChange={(e) => setFname(e.target.value)} />
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Doe" type="text" onChange={(e) => setLname(e.target.value)} />
             <Input id="lastname" placeholder="Doe" type="text" onChange={(e) => setLname(e.target.value)} />
           </LabelInputContainer>
         </div>
@@ -138,7 +126,6 @@ export function Signup() {
           <Input
             id="comfirm password"
             placeholder="••••••••"
-            type="password"
             type="password"
             onChange={(e) => setConfirmPassword(e.target.value)}
 

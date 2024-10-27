@@ -1,9 +1,10 @@
 // app/about/layout.js
-export default function LeaderBoardLayout({ children }) {
+import BottomNav from "@/components/ui/Bottom-Nav/bottomNav";
+export default function DiscipleshipLayout({ children }) {
   return (
     <div className="">
-      
       <section className="">{children}</section>
+      <BottomNav />
     </div>
   );
 }

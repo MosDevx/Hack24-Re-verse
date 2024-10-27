@@ -4,7 +4,7 @@ import bottomNav from "@/components/ui/Bottom-Nav/bottomNav";
 
 export default function signin() {
   return (
-    <div>
+    <div className='bg-orange-300'>
       <Signup />
       {/* <bottomNav /> */}
        

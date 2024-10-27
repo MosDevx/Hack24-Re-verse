@@ -5,7 +5,7 @@ import { Login } from '@/components/ui/Auth/login'
 export default function Home() {
   return (
     <div>
-      <Signup />
+      
       <Login />
     </div>
     

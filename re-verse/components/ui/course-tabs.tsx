@@ -16,12 +16,14 @@ export const CourseTabs = ({
   activeTabClassName,
   tabClassName,
   contentClassName,
+  changeLevel
 }: {
   tabs: Tab[];
   containerClassName?: string;
   activeTabClassName?: string;
   tabClassName?: string;
   contentClassName?: string;
+  changeLevel: (level: number) => void
 }) => {
   const [active, setActive] = useState<Tab>(propTabs[0]);
   const [tabs, setTabs] = useState<Tab[]>(propTabs);
@@ -49,6 +51,7 @@ export const CourseTabs = ({
             key={tab.title}
             onClick={() => {
               moveSelectedTabToTop(idx);
+              changeLevel(idx)
             }}
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}

@@ -3,17 +3,51 @@ import React from "react";
 import { Label } from "@/components/ui/Auth/label";
 import { Input } from "@/components/ui/Auth/input";
 import { cn } from "@/lib/utils";
-import {
-  IconBrandFacebook,
-  IconBrandGoogle,
-  IconBrandApple,
-} from "@tabler/icons-react";
+import googleAuth from "@/components/ui/Auth/firebaseAuth"
+import { IconBrandFacebook,   IconBrandGoogle,   IconBrandApple,} from "@tabler/icons-react";
+import { FormEvent, useState } from "react";
+import {getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app"
+import firebaseConfig from "@/app/firebaseConfig"
 
 export function Signup() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const [email, setEmail] =useState("");
+  const [password, setPassword] =useState("");
+  const [confirmPassword, setConfirmPassword]= useState("");
+  const [error ,setError] =useState<string |null>(null);
+  const app =initializeApp(firebaseConfig)
+  const auth = getAuth(app);
+
+  const handleSubmit =async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted");
+
+    if(password !== confirmPassword){
+      setError("Passwords do not match");
+      return;
+    }
+    try{
+      const userCredential =await createUserWithEmailAndPassword(auth, email, password);
+      console.log("User registered:", userCredential.user);
+
+      // Automatically sign in the user
+      const user = userCredential.user;
+      if (user) {
+        console.log('User signed in:', user);
+        // Redirect or navigate to dashboard after login
+        window.location.href= "/Profile"
+      }
+    }catch(error: any){
+      console.error("Error signing up:", error.message);
+      setError(error.message);
+    };
+
   };
+
+  function google_auth(){
+    googleAuth()
+  }
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
@@ -40,11 +74,11 @@ export function Signup() {
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input id="email" placeholder="projectmayhem@fc.com" type="email" onChange={(e) => setEmail(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input id="password" placeholder="••••••••" type="password" onChange={(e) => setPassword(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-8">
           <Label htmlFor="accountpassword">Confirm Password</Label>
@@ -52,6 +86,8 @@ export function Signup() {
             id="comfirm password"
             placeholder="••••••••"
             type="confirm password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+
           />
         </LabelInputContainer>
 
@@ -79,6 +115,7 @@ export function Signup() {
           <button
             className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
             type="submit"
+            onClick={google_auth}
           >
             <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
             <span className="text-neutral-700 dark:text-neutral-300 text-sm">

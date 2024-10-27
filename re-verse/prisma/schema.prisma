@@ -11,6 +11,8 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_PRISMA_URL")
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
 }
 
 model Users {
@@ -40,6 +42,7 @@ model Users {
 model Articles {
   id        Int      @id @default(autoincrement())
   title     String
+  content   String
   content   String
   published Boolean  @default(false)
   // author Users @relation(fields: [authorId],references: [id])
@@ -96,11 +99,16 @@ model Notifications {
 model Course {
   id          Int      @id @default(autoincrement())
   name        String // Name of the course
+  id          Int      @id @default(autoincrement())
+  name        String // Name of the course
   description String? // Description of the course
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   // One-to-many relationship with Stage
+  stages Stage[]
   stages Stage[]
 }
 
@@ -110,12 +118,20 @@ model Stage {
   course    Course   @relation(fields: [courseId], references: [id])
   courseId  Int
   createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  name      String // Name of the stage (e.g. Beginner, Intermediate, Expert)
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  Int
+  createdAt DateTime @default(now())
 
   // One-to-many relationship with Level
+  levels Level[]
   levels Level[]
 }
 
 model Level {
+  id          Int      @id @default(autoincrement())
+  title       String // Title of the level
   id          Int      @id @default(autoincrement())
   title       String // Title of the level
   description String? // Description of the level
@@ -123,8 +139,13 @@ model Level {
   stage       Stage    @relation(fields: [stageId], references: [id])
   stageId     Int
   createdAt   DateTime @default(now())
+  content     String // Content for the level
+  stage       Stage    @relation(fields: [stageId], references: [id])
+  stageId     Int
+  createdAt   DateTime @default(now())
 
   // One-to-many relationship with LevelTrivia
+  trivias LevelTrivia[]
   trivias LevelTrivia[]
 }
 

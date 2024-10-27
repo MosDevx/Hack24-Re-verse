@@ -14,16 +14,16 @@ datasource db {
 }
 
 model Users {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
   first_name   String
   last_name    String
-  created_At   DateTime @default(now())
-  dob          DateTime
+  created_At   DateTime  @default(now())
+  dob          DateTime?
   profile_pik  String?
   gender       String?
-  progress     Int?
-  trivia_score Int?
+  progress     Int       @default(0)
+  trivia_score Int       @default(0)
   //one-to-one rship to Streak
   streak       Streak?
   streakId     Int? //foreign key for streak
@@ -40,7 +40,7 @@ model Users {
 model Articles {
   id        Int      @id @default(autoincrement())
   title     String
-  content   String?
+  content   String
   published Boolean  @default(false)
   // author Users @relation(fields: [authorId],references: [id])
   authorId  Int

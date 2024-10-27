@@ -199,3 +199,23 @@ export async function getUsers() {
   });
   return users;
 }
+
+export async function createUser(email:string, firstName: string,lastName:string){
+  try {
+    const user = await prisma.users.create({
+      data: {
+        email: email,
+        first_name: firstName,
+        last_name: lastName,
+      },
+    });
+
+    console.log("User created successfully:", user);
+    return user; // You can return the user object for further actions
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error; // Re-throw the error for handling in your React component
+  }
+}
+
+

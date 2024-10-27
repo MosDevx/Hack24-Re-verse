@@ -12,14 +12,15 @@ export function Login() {
   };
 
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
+    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black mt-15">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
         Welcome back to re
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-fuchsia-600">-Verse</span>
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-fuchsia-600">Verse</span>
       </h2>
-      <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Login to your account
+      <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300 inline-block">
+        Don't have an account?  
       </p>
+      <a href="/signup" className="text-blue-600 dark:text-blue-400 text-sm font-medium">  Sign up</a>
       <form className="my-8" onSubmit={handleSubmit}>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>

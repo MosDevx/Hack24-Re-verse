@@ -1,10 +1,14 @@
-import { Signup } from '@/components/ui/Auth/signup'
 import React from 'react'
+import {Signup} from '@/components/ui/Auth/signup'
+import bottomNav from "@/components/ui/Bottom-Nav/bottomNav";
 
-const page = () => {
+export default function signin() {
   return (
-    <div><Signup /></div>
+    <div>
+      <Signup />
+      {/* <bottomNav /> */}
+       
+    </div>
+    
   )
 }
-
-export default page

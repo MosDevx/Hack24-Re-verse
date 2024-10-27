@@ -13,7 +13,9 @@ export function Hero() {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gradient-to-r from-blue-50 to-fuchsia-100 p-8 space-y-12 md:space-y-0 md:space-x-8">
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gradient-to-r from-blue-50 to-fuchsia-100 p-8 space-y-12 md:space-y-0 md:space-x-8"
+      style={{ background: "linear-gradient(90deg, #818CF8 0%, #FAD7A1 100%)" }}
+    >
       {/* Text Section */}
       <div className="text-center md:text-left inline-block md:w-1/2">
         <h1 className="text-5xl md:text-7xl font-extrabold mb-6">

@@ -22,14 +22,16 @@ export function Hero() {
         </h1>
         <TypewriterEffectSmooth words={words} />
         <div className="mt-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-          <button className="w-40 h-12 rounded-xl bg-black text-white text-sm hover:bg-gray-800 transition duration-300">
-            Join now
+        <Link href="/login" passHref>
+           <button onClick={Signup} className="w-40 h-12 rounded-xl bg-black text-white text-sm hover:bg-gray-800 transition duration-300">
+            Sign Up
           </button>
-            <Link href="/signup" passHref>
-              <button className="w-40 h-12 rounded-xl bg-white text-black border border-black text-sm hover:bg-gray-200 transition duration-300">
-                Signup
-              </button>
-            </Link>
+        </Link>
+        <Link href="/login" passHref>
+          <button className="w-40 h-12 rounded-xl bg-white text-black border border-black text-sm hover:bg-gray-200 transition duration-300">
+            Login
+          </button>
+        </Link>
           
         </div>
       </div>

@@ -5,11 +5,30 @@ import { Input } from "@/components/ui/Auth/input";
 import { cn } from "@/lib/utils";
 import { IconBrandFacebook, IconBrandGoogle, IconBrandApple } from "@tabler/icons-react";
 import googleAuth from "@/components/ui/Auth/firebaseAuth";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { useState } from "react";
+import { initializeApp } from "firebase/app"
+import firebaseConfig from "@/app/firebaseConfig"
 
 export function Login() {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const app =initializeApp(firebaseConfig)
+  const auth = getAuth(app);
+
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("User signed in:", userCredential.user);
+      // Redirect the user to the dashboard or home page after login
+      window.location.href = "/Profile"; // Replace with your desired route
+    } catch (err: any) {
+      console.error("Error signing in:", err);
+      setError(err.message); // Display error to the user
+    }
   };
   function google_auth(){
     googleAuth()
@@ -27,11 +46,11 @@ export function Login() {
       <form className="my-8" onSubmit={handleSubmit}>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+          <Input id="email" placeholder="projectmayhem@fc.com" type="email" onChange={(e) => setEmail(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" />
+          <Input id="password" placeholder="••••••••" type="password"  onChange={(e) => setPassword(e.target.value)} />
         </LabelInputContainer>
         <button
           className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"

@@ -9,17 +9,17 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
 }
 
 model Users {
-  id          Int      @id @default(autoincrement())
-  email       String   @unique
+  id          Int       @id @default(autoincrement())
+  email       String    @unique
   first_name  String
   last_name   String
-  created_At  DateTime @default(now())
-  dob         DateTime
+  created_At  DateTime  @default(now())
+  dob         DateTime?
   profile_pik String?
   gender      String?
 
@@ -39,7 +39,7 @@ model Users {
 model Articles {
   id        Int      @id @default(autoincrement())
   title     String
-  content   String?
+  content   String
   published Boolean  @default(false)
   // author Users @relation(fields: [authorId],references: [id])
   authorId  Int
@@ -89,45 +89,45 @@ model Notifications {
 }
 
 model Course {
-  id         Int      @id @default(autoincrement())
-  name       String   // Name of the course
+  id          Int      @id @default(autoincrement())
+  name        String // Name of the course
   description String? // Description of the course
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   // One-to-many relationship with Stage
-  stages     Stage[]
+  stages Stage[]
 }
 
 model Stage {
-  id         Int      @id @default(autoincrement())
-  name       String   // Name of the stage (e.g. Beginner, Intermediate, Expert)
-  course     Course   @relation(fields: [courseId], references: [id])
-  courseId   Int
-  createdAt  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  name      String // Name of the stage (e.g. Beginner, Intermediate, Expert)
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  Int
+  createdAt DateTime @default(now())
 
   // One-to-many relationship with Level
-  levels     Level[]
+  levels Level[]
 }
 
 model Level {
-  id         Int      @id @default(autoincrement())
-  title      String   // Title of the level
+  id          Int      @id @default(autoincrement())
+  title       String // Title of the level
   description String? // Description of the level
-  content    String   // Content for the level
-  stage      Stage    @relation(fields: [stageId], references: [id])
-  stageId    Int
-  createdAt  DateTime @default(now())
+  content     String // Content for the level
+  stage       Stage    @relation(fields: [stageId], references: [id])
+  stageId     Int
+  createdAt   DateTime @default(now())
 
   // One-to-many relationship with LevelTrivia
-  trivias    LevelTrivia[]
+  trivias LevelTrivia[]
 }
 
 model LevelTrivia {
-  id         Int      @id @default(autoincrement())
-  question   String   // Trivia question
-  answer     String   // Correct answer
-  level      Level    @relation(fields: [levelId], references: [id])
-  levelId    Int
-  createdAt  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  question  String // Trivia question
+  answer    String // Correct answer
+  level     Level    @relation(fields: [levelId], references: [id])
+  levelId   Int
+  createdAt DateTime @default(now())
 }

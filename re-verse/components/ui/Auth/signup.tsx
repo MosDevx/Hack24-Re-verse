@@ -1,14 +1,16 @@
 "use client";
-import React from "react";
+import React, { FormEvent, useState } from "react";
 import { Label } from "@/components/ui/Auth/label";
 import { Input } from "@/components/ui/Auth/input";
 import { cn } from "@/lib/utils";
 import googleAuth from "@/components/ui/Auth/firebaseAuth"
 import { IconBrandFacebook,   IconBrandGoogle,   IconBrandApple,} from "@tabler/icons-react";
-import { FormEvent, useState } from "react";
 import {getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app"
 import firebaseConfig from "@/app/firebaseConfig"
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export function Signup() {
 
@@ -16,6 +18,8 @@ export function Signup() {
   const [password, setPassword] =useState("");
   const [confirmPassword, setConfirmPassword]= useState("");
   const [error ,setError] =useState<string |null>(null);
+  const [fname, setFname] =useState("")
+  const [lname, setLname] =useState("")
   const app =initializeApp(firebaseConfig)
   const auth = getAuth(app);
 
@@ -28,16 +32,52 @@ export function Signup() {
       return;
     }
     try{
+      // console.log("Registration Details:", email, password)
       const userCredential =await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered:", userCredential.user);
 
-      // Automatically sign in the user
-      const user = userCredential.user;
-      if (user) {
-        console.log('User signed in:', user);
-        // Redirect or navigate to dashboard after login
-        window.location.href= "/Profile"
+      async function createUser(data: {email:string; firstName: string;lastName:string;
+      }) {
+        try {
+          const user = await prisma.users.create({
+            data: {
+              email: data.email,
+              first_name: data.firstName,
+              last_name: data.lastName,
+            },
+          });
+      
+          console.log("User created successfully:", user);
+          return user; // You can return the user object for further actions
+        } catch (error) {
+          console.error("Error creating user:", error);
+          throw error; // Re-throw the error for handling in your React component
+        }
       }
+
+      const userData = {
+        email: email,
+        firstName: fname,
+        lastName: lname,
+      };
+    
+      try {
+        const user = await createUser(userData);
+        console.log("User created:", user);
+        // Handle successful registration (e.g., redirect to home page)
+        window.location.href="/Profile"
+      } catch (error) {
+        console.error("Error creating user:", error);
+        // Handle registration error (e.g., display error message)
+      }
+
+      // Automatically sign in the user
+      // const user = userCredential.user;
+      // if (user) {
+      //   console.log('User signed in:', user);
+      //   // Redirect or navigate to dashboard after login
+      //   //  
+      // }
     }catch(error: any){
       console.error("Error signing up:", error.message);
       setError(error.message);
@@ -65,11 +105,11 @@ export function Signup() {
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="John" type="text" />
+            <Input id="firstname" placeholder="John" type="text" onChange={(e) => setFname(e.target.value)} />
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Doe" type="text" />
+            <Input id="lastname" placeholder="Doe" type="text" onChange={(e) => setLname(e.target.value)} />
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
@@ -85,7 +125,7 @@ export function Signup() {
           <Input
             id="comfirm password"
             placeholder="••••••••"
-            type="confirm password"
+            type="password"
             onChange={(e) => setConfirmPassword(e.target.value)}
 
           />

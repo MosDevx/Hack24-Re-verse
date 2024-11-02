@@ -29,7 +29,7 @@ export function Hero() {
         </motion.h1>
         <TypewriterEffectSmooth words={words} />
         <div className="mt-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-          <Link href="/login" passHref>
+          <Link href="/landing-page" passHref>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

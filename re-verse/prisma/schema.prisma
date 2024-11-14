@@ -258,7 +258,7 @@ model UserTaskProgress{
 
 	progressStatus ProgressStatus
 	
-	completionData Json
+	completionData Json?
 	completionDate DateTime
 
 	userId Int
@@ -306,9 +306,9 @@ model CommunityUserJoin{
 		joinedAt DateTime @default(now())
 		lastActive DateTime
 		status CommunityStatus
-		customData Json
+
 		notificationsEnabled Boolean @default(true)
-		preferences Json
+		preferences Json?
 		role CommunityRole
 		xp Int @default(0)
 

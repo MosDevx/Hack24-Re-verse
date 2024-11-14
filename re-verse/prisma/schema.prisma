@@ -12,8 +12,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 
@@ -70,6 +70,8 @@ enum MemorySystem {
 }
 //User Model
 
+////USER MODULE
+
 model User {
 	id          Int      @id @default(autoincrement())
 	email       String   @unique
@@ -86,7 +88,7 @@ model User {
 
   streaks        Streak[]
   streakDateLogs StreakDateLog[]
-  stats          Stats
+  stats          Stats?
 
   communityUserJoins CommunityUserJoin[]
   communityMessages CommunityMessage[]
@@ -111,8 +113,6 @@ model User {
 	
 
 }
-
-
 
 
 model StreakDateLog{
@@ -156,6 +156,8 @@ model Stats{
 
 
 
+
+
 //// DISCIPLESHIP MODULE
 
 
@@ -171,10 +173,6 @@ model Module {
 	moduleCommunityActivities ModuleCommunityActivity[]
 
 	stats       Stats[]
-
-
-
-
 
 }
 
@@ -273,11 +271,14 @@ model UserTaskProgress{
 	createdAt   DateTime @default(now())
 	updatedAt DateTime @updatedAt
 
+
+	@@index([userId])
+	@@index([taskId])
+	@@index([progressStatus])
+
 }
 
 //// COMMUNITY MODULE
-
-
 
 model Community {
 		id          Int      @id @default(autoincrement())
@@ -318,6 +319,10 @@ model CommunityUserJoin{
 
 		@@unique([userId, communityId])
 		updatedAt DateTime @updatedAt
+
+
+		@@index([userId])
+		@@index([communityId])
 }
 
 
@@ -333,6 +338,9 @@ model CommunityMessage{
 
 		user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
 		community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+
+		@@index([communityId])
+	  @@index([userId])
 }
 
 
@@ -364,7 +372,7 @@ model CommunityActivity{
 		communityActivityMessages communityActivityMessage[]
 		communityActivityProgresses CommunityActivityProgress[]
 		
-
+		@@index([communityId])
 
 }
 
@@ -481,9 +489,6 @@ model StudyMilestoneSection{
 model CommunityActivityProgress{
 		id					Int      @id @default(autoincrement())
 		
-		
-		
-	
 
 		userId Int
 		user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -510,6 +515,8 @@ model CommunityActivityProgress{
 
 
 
+
+
 //// VERSE MEMORIZATION MODULE
 
 model UserVerseMemory{
@@ -528,6 +535,10 @@ model UserVerseMemory{
 	lastAttemptDate DateTime
 	createdAt DateTime @default(now())
 	memorySystem MemorySystem
+
+	@@index([userId])
+	@@index([verseId])
+	@@index([nextReviewDate])
 
 }
 
@@ -624,6 +635,8 @@ model NavigatorVerse{
 
 
 
+
+
 //// JOURNAL MODULE
 
 model JournalEntry {
@@ -644,6 +657,9 @@ model JournalEntry {
 	user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
 
 	journalEntryComments JournalEntryComment[]
+
+	@@index([userId])
+	@@index([isPublic])
 
 }
 

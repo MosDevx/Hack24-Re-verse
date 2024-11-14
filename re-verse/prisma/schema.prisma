@@ -4,6 +4,9 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+
+
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,146 +16,648 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-model Users {
-  id          Int      @id @default(autoincrement())
-  email       String   @unique
-  first_name  String
-  last_name   String
-  created_At  DateTime @default(now())
-  dob         DateTime
-  profile_pik String?
-  gender      String?
-  progress    Int?
-  trivia_score Int?
-  //one-to-one rship to Streak
-  streak   Streak?
-  streakId Int? //foreign key for streak
 
-  // articles Articles[]   //one-to-many rship to Articles 
-  notification Notifications[]
-  // trivias Trivias[]
 
-  //One-to-many rship for messages sent and received 
-  sentMessages     Messages[] @relation("SentMessages")
-  receivedMessages Messages[] @relation("ReceivedMessages")
+enum TaskType {
+	ARTICLE
+	VIDEO
+	QUIZ
 }
 
-model Articles {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  // author Users @relation(fields: [authorId],references: [id])
-  authorId  Int
-  createdAt DateTime @default(now())
+enum QuizType {
+	MULTIPLE_CHOICE
+	TRUE_FALSE
+	FILL_IN_THE_BLANK
 }
 
-model Lessons {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
+enum CommunityType {
+	FAMILY
+	FRIENDS
+	CHURCH_GROUP
+}
+
+
+enum CommunityStatus {
+	ACTIVE
+	INACTIVE
+	PENDING
+}
+
+enum CommunityRole {
+	SHEPHERD
+	SHEEP
+}	
+
+enum CommunityActivityType {
+	QUIZ
+	MODULE
+	VIDEO
+}
+
+
+enum ProgressStatus {
+	NOT_STARTED
+	IN_PROGRESS
+	COMPLETED
+}
+
+
+
+enum MemorySystem {
+	NORMAL
+	NAVIGATORS
+	USER_FAVOURITE
+}
+//User Model
+
+model User {
+	id          Int      @id @default(autoincrement())
+	email       String   @unique
+	first_name  String
+	last_name   String
+	username    String 
+	date_of_birth   DateTime
+	profile_picture_url String
+	gender      String?
+	role 			String?
+	created_At DateTime @default(now())
+	updated_At DateTime @updatedAt
+
+
+  streaks        Streak[]
+  streakDateLogs StreakDateLog[]
+  stats          Stats
+
+  communityUserJoins CommunityUserJoin[]
+  communityMessages CommunityMessage[]
+  communityActivities CommunityActivity[]
+  communityActivityMessages communityActivityMessage[]
+	communityActivityProgresses CommunityActivityProgress[]
+	communityActivityParticipants CommunityActivityParticipants[]
+
+
+  userVerseMemories UserVerseMemory[]
+  userFavouriteVerses UserFavouriteVerse[]
+
+	userTasksProgress UserTaskProgress[]
+
+  journalEntries JournalEntry[]
+  journalEntryComments JournalEntryComment[]
+
+
+	//set up relationship with user
+	//one-to-many relationship
+	//one user can have many streaks
+	
+
+}
+
+
+
+
+model StreakDateLog{
+	id          Int      @id @default(autoincrement())
+	date        DateTime @default(now())
+	userId      Int
+	user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Streak {
-  id     Int    @id @default(autoincrement())
-  count  Int    @default(0)
-  user   Users? @relation(fields: [userId], references: [id])
-  userId Int?   @unique
+	id     Int    @id @default(autoincrement())
+	current_streak  Int    @default(0)
+	longest_streak  Int    @default(0)
+	userId Int
+	user   User @relation(fields: [userId], references: [id] , onDelete: Cascade)
 }
 
-model Messages {
-  id      Int      @id @default(autoincrement())
-  content String
-  sentAt  DateTime @default(now())
 
-  sender   Users @relation("SentMessages", fields: [senderId], references: [id])
-  senderId Int
+model Stats{
+	id          Int      @id @default(autoincrement())
+	discipleship_progress Float? @default(0)
+	xp Int @default(0)
 
-  receiver   Users @relation("ReceivedMessages", fields: [receiverId], references: [id])
-  receiverId Int
+	userId      Int @unique
+	currentModuleId Int? 
+	currentLessonId Int?
+	currentTaskId Int?
+
+	user        User @relation(fields: [userId], references: [id], onDelete: Cascade)
+	//one-to-one rship to module
+	module Module? @relation(fields: [currentModuleId], references: [id], onDelete: SetNull)
+	//one-to-one lesson	
+	lesson Lesson? @relation(fields: [currentLessonId], references: [id], onDelete: SetNull)
+	//one-to-one task
+	task Task? @relation(fields: [currentTaskId], references: [id], onDelete: SetNull)
+
+	createdAt   DateTime @default(now())
+	updatedAt DateTime @updatedAt
+
 }
 
-model Trivia {
-  id        Int      @id @default(autoincrement())
-  question  String
-  answer    String
-  type      String
-  createdAt DateTime @default(now())
 
-  // One-to-many relationship with Trivia
-  choices   Choice[]
+
+//// DISCIPLESHIP MODULE
+
+
+model Module {
+	id          Int      @id @default(autoincrement())
+	title       String
+	description String
+	total_lessons Int
+	createdAt   DateTime @default(now())
+	updatedAt   DateTime @updatedAt
+
+	lessons     Lesson[]
+	moduleCommunityActivities ModuleCommunityActivity[]
+
+	stats       Stats[]
+
+
+
+
+
 }
 
-model Notifications {
-  id        Int      @id @default(autoincrement())
-  message   String
-  seen      Boolean  @default(false)
-  createdAt DateTime @default(now())
-  userId    Int
-  user      Users    @relation(fields: [userId], references: [id])
+
+model Lesson {
+	id          Int      @id @default(autoincrement())
+	title       String
+	lesson_number Int?
+	description String
+	createdAt   DateTime @default(now())
+
+	moduleId    Int?
+	module      Module? @relation(fields: [moduleId], references: [id], onDelete: SetNull)
+
+	tasks       Task[]
+	stats       Stats[]
+
 }
 
-model Course {
-  id         Int      @id @default(autoincrement())
-  name       String   // Name of the course
-  description String? // Description of the course
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
 
-  // One-to-many relationship with Stage
-  stages     Stage[]
+model Task {
+	id          Int      @id @default(autoincrement())
+	lessonId    Int?
+	title 		 String
+	taskType  TaskType
+	orderPosition Int?
+	isMandatory Boolean @default(true)
+
+
+
+	articleTask ArticleTask?
+	videoTask VideoTask?
+	quizTask QuizTask?
+	lesson      Lesson? @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+	
+	createdAt   DateTime @default(now())
+
+	stats       Stats[]
+	userTaskProgress UserTaskProgress[]
+
 }
 
-model Stage {
-  id         Int      @id @default(autoincrement())
-  name       String   // Name of the stage (e.g. Beginner, Intermediate, Expert)
-  course     Course   @relation(fields: [courseId], references: [id])
-  courseId   Int
-  createdAt  DateTime @default(now())
 
-  // One-to-many relationship with Level
-  levels     Level[]
+model ArticleTask{
+	id          Int      @id @default(autoincrement())
+	content     String
+
+	createdAt   DateTime @default(now())
+
+	taskId      Int?  @unique
+	task        Task? @relation(fields: [taskId], references: [id], onDelete: SetNull)
 }
 
-model Level {
-  id         Int      @id @default(autoincrement())
-  title      String   // Title of the level
-  description String? // Description of the level
-  content    String   // Content for the level
-  stage      Stage    @relation(fields: [stageId], references: [id])
-  stageId    Int
-  createdAt  DateTime @default(now())
+model VideoTask{
+	id          Int      @id @default(autoincrement())
+	video_url   String
 
-  // One-to-many relationship with LevelTrivia
-  trivias    LevelTrivia[]
+	createdAt   DateTime @default(now())
+
+	taskId      Int? @unique
+	task        Task? @relation(fields: [taskId], references: [id], onDelete: SetNull)
 }
 
-model LevelTrivia {
-  id         Int      @id @default(autoincrement())
-  question   String   // Trivia question
-  answer     String   // Correct answer
-  type       String   // Type of trivia (e.g. Multiple Choice, True or False)
-  level      Level    @relation(fields: [levelId], references: [id])
-  levelId    Int
-  createdAt  DateTime @default(now())
 
-  // One-to-many relationship with Option
-  options    Option[]
+
+
+model QuizTask{
+	id          Int      @id @default(autoincrement())
+
+	quizType    QuizType
+	quizData Json
+
+	
+	createdAt   DateTime @default(now())
+
+	taskId      Int? @unique
+	task        Task? @relation(fields: [taskId], references: [id], onDelete: SetNull)
 }
 
-model Option{
-  id         Int      @id @default(autoincrement())
-  option     String
-  levelTrivia LevelTrivia @relation(fields: [levelTriviaId], references: [id])
-  levelTriviaId Int
-  createdAt  DateTime @default(now())
+model UserTaskProgress{
+	id          Int      @id @default(autoincrement())
+	isCompleted Boolean @default(false)
+
+	progressStatus ProgressStatus
+	
+	completionData Json
+	completionDate DateTime
+
+	userId Int
+	user User @relation(fields: [userId], references:[id], onDelete: Cascade)
+
+	
+	taskId      Int @unique
+	task        Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+	createdAt   DateTime @default(now())
+	updatedAt DateTime @updatedAt
+
 }
 
-model Choice {
-  id         Int      @id @default(autoincrement())
-  choice     String
-  Trivia Trivia @relation(fields: [TriviaId], references: [id])
-  TriviaId Int
-  createdAt  DateTime @default(now())
+//// COMMUNITY MODULE
+
+
+
+model Community {
+		id          Int      @id @default(autoincrement())
+		name String
+		communityType CommunityType
+		description String
+		image_url String?
+
+		createdAt   DateTime @default(now())
+		updatedAt DateTime @updatedAt
+
+		communityUserJoins CommunityUserJoin[]
+		communityMessages CommunityMessage[]
+		communityActivities CommunityActivity[]
+		communityActivityProgresses CommunityActivityProgress[]
+
+
+}
+
+model CommunityUserJoin{
+		id          Int      @id @default(autoincrement())
+
+		userId Int
+		communityId Int
+		joinedAt DateTime @default(now())
+		lastActive DateTime
+		status CommunityStatus
+		customData Json
+		notificationsEnabled Boolean @default(true)
+		preferences Json
+		role CommunityRole
+		xp Int @default(0)
+
+
+
+		user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+		community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+
+		@@unique([userId, communityId])
+		updatedAt DateTime @updatedAt
+}
+
+
+model CommunityMessage{
+		id					Int      @id @default(autoincrement())
+		content String
+
+
+		userId Int?
+		communityId Int
+		createdAt DateTime @default(now())
+		updatedAt  DateTime @updatedAt
+
+		user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+		community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+}
+
+
+model CommunityActivity{
+		id					Int      @id @default(autoincrement())
+		
+		title String
+		description String
+		activityType CommunityActivityType
+
+		startDate DateTime
+		endDate DateTime
+
+		createdBy Int?
+		user User? @relation(fields: [createdBy], references: [id], onDelete: SetNull)
+		
+		communityId Int
+		community Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+					
+		updatedAt DateTime @updatedAt
+		createdAt DateTime @default(now())
+
+
+		studyGroupCommunityActivity StudyGroupCommunityActivity?
+		quizCommunityActivity QuizCommunityActivity?
+		moudleCommunityActivity ModuleCommunityActivity?
+
+		communityActivityParticipants CommunityActivityParticipants[]
+		communityActivityMessages communityActivityMessage[]
+		communityActivityProgresses CommunityActivityProgress[]
+		
+
+
+}
+
+model CommunityActivityParticipants{
+
+	id					Int      @id @default(autoincrement())
+	userId Int
+	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+	communityActivityId Int
+	communityActivity CommunityActivity @relation(fields: [communityActivityId], references: [id], onDelete: Cascade)
+
+	role CommunityRole
+
+	createAt DateTime @default(now())
+
+}
+
+
+model communityActivityMessage{
+		id					Int      @id @default(autoincrement())
+		content String
+
+		userId Int?
+		communityActivityId Int
+
+		user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+		communityActivity CommunityActivity @relation(fields: [communityActivityId], references: [id], onDelete: Cascade)
+		createdAt DateTime @default(now())
+		updatedAt DateTime @updatedAt
+}
+model StudyGroupCommunityActivity{
+		id					Int      @id @default(autoincrement())
+		schedule DateTime
+		topic String?
+		venue String?
+		resource String?
+		hasMilestone Boolean @default(false)
+
+		communityActivityId Int @unique
+		communityActivity CommunityActivity @relation(fields: [communityActivityId], references: [id], onDelete: Cascade)
+		updatedAt DateTime @updatedAt
+		createdAt DateTime @default(now())
+
+		studyMilestone StudyMilestone? 
+}
+
+model QuizCommunityActivity{
+		id					Int      @id @default(autoincrement())
+		quizId Int
+		quizType QuizType
+		quizData Json
+		updatedAt DateTime @updatedAt
+		createdAt DateTime @default(now())
+
+		communityActivityId Int @unique
+		communityActivity CommunityActivity @relation(fields: [communityActivityId], references: [id], onDelete: Cascade)
+
+
+}
+
+
+model ModuleCommunityActivity{
+		id					Int      @id @default(autoincrement())
+		updatedAt DateTime @updatedAt
+		createdAt DateTime @default(now())
+
+		communityActivityId Int @unique
+		communityActivity CommunityActivity @relation(fields: [communityActivityId], references: [id], onDelete: Cascade)
+
+		moduleId Int? 
+		module Module? @relation(fields: [moduleId], references: [id], onDelete: SetNull)
+
+}
+
+
+
+
+model StudyMilestone{
+		id					Int      @id @default(autoincrement())
+		title String
+		description String
+		createdAt DateTime @default(now())
+		updatedAt DateTime @updatedAt
+		startDate DateTime?
+		endDate DateTime?
+
+		studyGroupCommunityActivityId Int @unique
+
+
+		studyGroupCommunityActivity StudyGroupCommunityActivity @relation(fields: [studyGroupCommunityActivityId], references: [id], onDelete: Cascade)
+
+		studyMilestoneSections StudyMilestoneSection[]
+}
+
+
+model StudyMilestoneSection{
+		id					Int      @id @default(autoincrement())
+		title String
+		range Json
+		description String?
+		order_position Int
+
+
+		createdAt DateTime @default(now())
+		updatedAt DateTime @updatedAt
+
+		studyMilestoneId Int
+		studyMilestone StudyMilestone @relation(fields: [studyMilestoneId], references: [id], onDelete: Cascade)
+
+}
+
+
+
+model CommunityActivityProgress{
+		id					Int      @id @default(autoincrement())
+		
+		
+		
+	
+
+		userId Int
+		user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+		communityId Int?
+		community Community? @relation(fields: [communityId], references: [id], onDelete: SetNull)
+
+		communityActivityId Int
+		communityActivity CommunityActivity @relation(fields: [communityActivityId], references: [id], onDelete: Cascade)
+
+		progressData Json
+		progressStatus ProgressStatus
+
+		completedAt DateTime
+		progress Float
+		isCompleted Boolean @default(false)
+
+		updatedAt DateTime @updatedAt
+		createdAt DateTime @default(now())
+
+
+}
+
+
+
+
+//// VERSE MEMORIZATION MODULE
+
+model UserVerseMemory{
+	id          Int      @id @default(autoincrement())
+
+
+	userId Int
+	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+	verseId Int
+	verse Verse @relation(fields: [verseId], references: [id], onDelete: Cascade)
+
+	successRate Float
+	nextReviewDate DateTime
+	intervalDays DateTime
+	lastAttemptDate DateTime
+	createdAt DateTime @default(now())
+	memorySystem MemorySystem
+
+}
+
+
+model Verse {
+	id          Int      @id @default(autoincrement())
+	reference  String
+	content     String
+	createdAt   DateTime @default(now())
+	updatedAt DateTime @updatedAt
+
+	verseTags VerseTagJoin[]
+	UserVerseMemory UserVerseMemory[]
+	UserFavouriteVerse UserFavouriteVerse[]
+	NavigatorVerse NavigatorVerse[]
+
+}
+
+model Tag{
+	id          Int      @id @default(autoincrement())
+	name String
+	createdAt   DateTime @default(now())
+	updatedAt DateTime @updatedAt
+
+	verseTags VerseTagJoin[]
+	NavigatorVerse NavigatorVerse[]
+
+}
+
+model VerseTagJoin{
+	id          Int      @id @default(autoincrement())
+
+	verseId Int
+	tagId Int
+
+	verse Verse @relation(fields: [verseId], references: [id], onDelete: Cascade)
+	tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+	createdAt   DateTime @default(now())
+	updatedAt DateTime @updatedAt
+}
+
+model UserFavouriteVerse{
+
+	id          Int      @id @default(autoincrement())
+
+	userId Int
+	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+	verseId Int
+	verse Verse @relation(fields: [verseId], references: [id], onDelete: Cascade)
+
+	createdAt   DateTime @default(now())
+	updatedAt DateTime @updatedAt
+
+	@@unique([userId, verseId])
+}
+
+
+model NavigatorTags{
+	id          Int      @id @default(autoincrement())
+
+	Title String
+
+	module String @db.Char(1)
+
+	createdAt   DateTime @default(now())
+	updatedAt DateTime @updatedAt
+
+	NavigatorVerse NavigatorVerse[]
+}
+
+
+model NavigatorVerse{
+
+	id          Int      @id @default(autoincrement())
+
+
+	verseId Int
+	verse Verse @relation(fields: [verseId], references: [id], onDelete: Cascade)
+
+	navigatorTagId Int
+	navigatorTag NavigatorTags @relation(fields: [navigatorTagId], references: [id], onDelete: Cascade)
+
+	tagId Int?
+	tag Tag? @relation(fields: [tagId], references: [id], onDelete: SetNull)
+
+	createdAt   DateTime @default(now())
+	updatedAt DateTime @updatedAt
+
+	@@unique([verseId, navigatorTagId])
+
+}
+
+
+
+//// JOURNAL MODULE
+
+model JournalEntry {
+
+	id          Int      @id @default(autoincrement())
+	title String
+	content String
+
+	references String?
+
+	isPublic Boolean @default(true)
+
+	createdAt   DateTime @default(now())
+	updatedAt DateTime @updatedAt
+	deleteAt DateTime?
+
+	userId Int?
+	user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+	journalEntryComments JournalEntryComment[]
+
+}
+
+model JournalEntryComment {
+
+	id					Int      @id @default(autoincrement())
+	content String
+	userID Int?
+	user User? @relation(fields: [userID], references: [id], onDelete: SetNull)
+	journalEntryID Int
+	journalEntry JournalEntry @relation(fields: [journalEntryID], references: [id], onDelete: Cascade)
+
+	createdAt DateTime @default(now())
+	updatedAt DateTime @updatedAt
+	deleteAt DateTime?
+
 }

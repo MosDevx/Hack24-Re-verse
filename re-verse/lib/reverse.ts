@@ -200,13 +200,18 @@ export async function getUsers() {
   return users;
 }
 
-export async function createUser(email:string, firstName: string,lastName:string){
+export async function createUser(email:string, fname: string,lname:string, profilePikUrl:string, gender:string, dob:Date, username:string){
   try {
-    const user = await prisma.users.create({
+    const user = await prisma.user.create({
       data: {
         email: email,
-        first_name: firstName,
-        last_name: lastName,
+        first_name: fname,
+        last_name: lname,
+        username: username,
+        date_of_birth : dob,
+        profile_picture_url :profilePikUrl,
+        gender : gender,
+        role : "User"
       },
     });
 

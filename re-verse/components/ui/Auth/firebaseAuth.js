@@ -45,18 +45,52 @@ export default async function googleAuth() {
     initializeApp(firebaseConfig);
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
+    
+    //request for additional  scopes for gender and dob
+    provider.addScope("profile")
+    provider.addScope("email")
+    provider.addScope("https://www.googleapis.com/auth/user.birthday.read");
+    provider.addScope("https://www.googleapis.com/auth/user.gender.read");
 
+    //sign in with google
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
-    const name = user.displayName || user.email.split("@")[0]; // Use displayName if available, fallback to email split
+    //Extract user details
+    const fname = user.displayName ? user.displayName.split(" ")[0] : "";
+    const lname =user.displayName ?   user.displayName.split(" ")[1] : "";
     const email = user.email;
-    const profilePic = user.photoURL;
+    const profilePicUrl = user.photoURL;
 
-    console.log("Details:", name, email, profilePic);
+    console.log("Details:", fname,lname, email, profilePicUrl);
+
+    //Fetch additional  user info using  Google People API
+    const token = await user.getIdToken();
+    const response = await fetch("https://people.googleapis.com/v1/people/me?personFields=gender,birthdays", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+
+    const data = await response.json();
+    let gender;
+    let dob ;
+
+    if (data.genders && data.genders.length > 0 ){
+      gender = data.genders[0].value
+    }else{
+      gender = "N/A"
+    }
+
+    if (data.birthdays && data.birthdays.length > 0 ){
+      const birthday = data.birthdays[0].date;
+      dob = `${birthday.year}-${birthday.month}-${birthday.day}`
+    }else{
+      dob ="N/A";
+    }
 
     // Create user in Prisma database
-    const createdUser = await createUser(email, name, name); // Use name for both first and last name initially
+    const createdUser = await createUser(email, fname, lname, profilePicUrl, gender, dob);
 
     console.log("User created successfully:", createdUser);
 

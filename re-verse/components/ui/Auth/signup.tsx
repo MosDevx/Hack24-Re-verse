@@ -1,6 +1,5 @@
 "use client";
 import React, { FormEvent, useState } from "react";
-import React, { FormEvent, useState } from "react";
 import { Label } from "@/components/ui/Auth/label";
 import { Input } from "@/components/ui/Auth/input";
 import { cn } from "@/lib/utils";
@@ -10,9 +9,9 @@ import {getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app"
 import firebaseConfig from "@/app/firebaseConfig"
 import { createUser } from "@/lib/reverse";
-import { PrismaClient } from '@prisma/client';
+// import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export function Signup() {
 
@@ -22,6 +21,12 @@ export function Signup() {
   const [error ,setError] =useState<string |null>(null);
   const [fname, setFname] =useState("")
   const [lname, setLname] =useState("")
+  const [gender, setGender] =useState("")
+  const [dob, setDoB]  = useState("")
+  const [username, setUsername] =useState("")
+
+  const profilePicUrl ="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z' clip-rule='evenodd'/%3E%3C/svg%3E";
+
   const app =initializeApp(firebaseConfig)
   const auth = getAuth(app);
 
@@ -38,40 +43,46 @@ export function Signup() {
       const userCredential =await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered:", userCredential.user);
 
-      async function createUser(data: {email:string; firstName: string;lastName:string;
-      }) {
-        try {
-          const user = await prisma.users.create({
-            data: {
-              email: data.email,
-              first_name: data.firstName,
-              last_name: data.lastName,
-            },
-          });
-      
-          console.log("User created successfully:", user);
-          return user; // You can return the user object for further actions
-        } catch (error) {
-          console.error("Error creating user:", error);
-          throw error; // Re-throw the error for handling in your React component
-        }
-      }
+      // Create user in Prisma database
+      const createdUser = await createUser(email, fname, lname, profilePicUrl, gender, dob, username);
 
-      const userData = {
-        email: email,
-        firstName: fname,
-        lastName: lname,
-      };
+      //redirect user to profile page
+      window.location.href= "/Profile"
+
+      // async function createUser(data: {email:string; firstName: string;lastName:string;
+      // }) {
+      //   try {
+      //     const user = await prisma.users.create({
+      //       data: {
+      //         email: data.email,
+      //         first_name: data.firstName,
+      //         last_name: data.lastName,
+      //       },
+      //     });
+      
+      //     console.log("User created successfully:", user);
+      //     return user; // You can return the user object for further actions
+      //   } catch (error) {
+      //     console.error("Error creating user:", error);
+      //     throw error; // Re-throw the error for handling in your React component
+      //   }
+      // }
+
+      // const userData = {
+      //   email: email,
+      //   firstName: fname,
+      //   lastName: lname,
+      // };
     
-      try {
-        const user = await createUser(userData);
-        console.log("User created:", user);
-        // Handle successful registration (e.g., redirect to home page)
-        window.location.href="/Profile"
-      } catch (error) {
-        console.error("Error creating user:", error);
-        // Handle registration error (e.g., display error message)
-      }
+      // try {
+      //   const user = await createUser(userData);
+      //   console.log("User created:", user);
+      //   // Handle successful registration (e.g., redirect to home page)
+      //   window.location.href="/Profile"
+      // } catch (error) {
+      //   console.error("Error creating user:", error);
+      //   // Handle registration error (e.g., display error message)
+      // }
 
       // Automatically sign in the user
       // const user = userCredential.user;
@@ -114,10 +125,33 @@ export function Signup() {
             <Input id="lastname" placeholder="Doe" type="text" onChange={(e) => setLname(e.target.value)} />
           </LabelInputContainer>
         </div>
+
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
           <Input id="email" placeholder="projectmayhem@fc.com" type="email" onChange={(e) => setEmail(e.target.value)} />
         </LabelInputContainer>
+
+        <LabelInputContainer className="mb-4">
+          <Label htmlFor="username">Username</Label>
+          <Input id="username" placeholder="johndoe1234" type="text" onChange={(e) => setUsername(e.target.value)} />
+        </LabelInputContainer>
+
+        <LabelInputContainer className="mb-4">
+          <Label htmlFor="dob">Date of Birth</Label>
+          <Input id="dob" type="date" onChange={(e) => setDoB(e.target.value)} />
+        </LabelInputContainer>
+        <LabelInputContainer className="mb-4">
+
+        <Label htmlFor="gender">Gender</Label>
+        <select id="gender" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" onChange={(e) => setGender(e.target.value)}defaultValue="">
+          <option value="" disabled>Select your gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Binary">Binary</option>
+          <option value="Prefer Not To Say">Prefer Not To Say</option>
+        </select>
+      </LabelInputContainer>
+
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
           <Input id="password" placeholder="••••••••" type="password" onChange={(e) => setPassword(e.target.value)} />

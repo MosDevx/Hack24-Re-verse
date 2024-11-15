@@ -49,12 +49,12 @@ const people = [
 
 export function Footer() {
   return (
-    <footer className="w-full bg-gray-800 border-t-2 text-white py-4">
+    <footer className="w-full bg-slate-950 border-t-2 text-white py-4">
       <div className="container mx-auto flex flex-col items-center justify-center">
         <div className="flex flex-row items-center justify-center mb-4">
           <AnimatedTooltip items={people} />
         </div>
-        <p className="text-center text-sm">For God's Glory</p>
+        <p className="text-center text-xl">For God's Glory</p>
       </div>
     </footer>
   );

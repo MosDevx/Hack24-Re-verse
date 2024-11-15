@@ -8,6 +8,7 @@ import googleAuth from "@/components/ui/Auth/firebaseAuth"; // Adjust import bas
 import Loadinggif from "@/public/loading.gif";
 import Image from "next/image";
 import Link from "next/link";
+import {DateInput} from "@nextui-org/date-input"
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -49,13 +50,57 @@ const Signup: React.FC = () => {
         </h2>
         <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
           Already have an account?{" "}
-          <a href="#" className="text-blue-600 dark:text-blue-400 font-medium">
-            Sign up
+          <a href="/login" className="text-blue-600 dark:text-blue-400 font-medium">
+            Log in
           </a>
         </p>
         <form onSubmit={handleSubmit} className="mt-6 space-y-6">
+          <div className="space-y-2 flex flex-col md:flex-row  gap-4  align-middle items-center  ">
+            <div className="flex flex-col gap-2 pt-2 w-full md:w-1/2">
+              <label htmlFor="f_name" className="block text-md text-white">First Name</label>
+              <input
+                type="text"
+                value={password} //Dan should implement the correct state for this input
+                onChange={(e) => setPassword(e.target.value)}
+                className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
+                placeholder="John"
+              />
+            </div>
+            <div className="flex flex-col gap-2 w-full md:w-1/2">
+              <label htmlFor="confirmPassword" className="block text-md text-white">Last Name</label>
+              <input
+                type="password"
+                value={confirmPassword} //Dan should implement the correct state for this input
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
+                placeholder="Doe"
+              />
+            </div>
+          </div>
+          <div className="space-y-2 flex flex-col md:flex-row  gap-4  align-middle items-center  ">
+            <div className="flex flex-col gap-2 pt-2 w-full md:w-1/2">
+              <label htmlFor="password" className="block text-md text-white">Date of Birth</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
+                placeholder="mm/dd/yyyy"
+              />
+            </div>
+            <div className="flex flex-col gap-2 w-full md:w-1/2">
+              <label htmlFor="confirmPassword" className="block text-md text-white">Gender</label>
+              <input
+                type="text"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
+                placeholder=""
+              />
+            </div>
+          </div>
           <div className="space-y-2">
-            <label className="block text-md" htmlFor="email">Email address</label>
+            <label className="block text-md text-white" htmlFor="email">Email address</label>
             <input
               type="email"
               value={email}
@@ -64,29 +109,31 @@ const Signup: React.FC = () => {
               placeholder="someone@example.com"
             />
           </div>
-          <div className="space-y-2">
-            <label htmlFor="password" className="block text-md">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
-              placeholder="••••••••"
-            />
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="confirmPassword" className="block text-md">Confirm Password</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
-              placeholder="••••••••"
-            />
+          <div className="space-y-2 flex flex-col md:flex-row  gap-4  align-middle items-center  ">
+            <div className="flex flex-col gap-2 pt-2 w-full md:w-1/2">
+              <label htmlFor="password" className="block text-md text-white">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
+                placeholder="••••••••"
+              />
+            </div>
+            <div className="flex flex-col gap-2 w-full md:w-1/2">
+              <label htmlFor="confirmPassword" className="block text-md text-white">Confirm Password</label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
+                placeholder="••••••••"
+              />
+            </div>
           </div>
           <div className="space-y-2">
             <input className="accent-amber-600 dark:accent-gray-800" type="checkbox" id="terms" />
-            <label className="px-3">I accept the terms and conditions</label>
+            <label className="px-3 text-white">I accept the terms and conditions</label>
           </div>
           <Link href={"/after-sign"}>
             <button

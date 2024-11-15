@@ -23,36 +23,36 @@ export const projects = [
     title: "Bible Trivia",
     description:
       "Who in the bible did not have a father?....Nun!! Enjoy our amazing bible trivia questions that'll immerse you into grasping the scriptures",
-    link: "https://stripe.com",
+    link: "/trivia",
   },
   {
     title: "Community",
     description:
       "No man is an Island. Explore and join a community of believers that will challenge and inspire you to grow in your faith",
-    link: "https://netflix.com",
+    link: "/Communities",
   },
   {
     title: "Discipleship",
     description:
       "Get exclusive lessons tailored to your specific age group that will impact you in your faith journey",
-    link: "https://google.com",
+    link: "/discipleship",
   },
   {
     title: "Disciple others",
     description:
       "We're discipling disciple-makers that will be part of the great commission.No matter you age, or where you are, come tukuplug!!",
-    link: "https://meta.com",
+    link: "#",
   },
   {
     title: "Leaderboard",
     description:
       "Wanna have some fun? Why don't you learn, play and earn points that'll put you above your peers. ",
-    link: "https://amazon.com",
+    link: "#",
   },
   {
     title: "holyGPT",
     description:
       "We have embedded a chatbot that you can ask questions and gain tips helpful in your faith journey. DISCLAIMER: holyGPT can make mistakes. It isn't meant to replace human interactions. Make sure to confirm its answers form a reliable source",
-    link: "https://microsoft.com",
+    link: "/holyGPT",
   },
 ];

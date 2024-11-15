@@ -3,7 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import {Navbar} from "@/components/ui/navbar"
 import { AppStoreProvider } from "@/providers/app-store-provider";
-import { AppStoreProvider } from "@/providers/app-store-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,8 +38,6 @@ export default function RootLayout({
         
         
         {children}
-
-      </AppStoreProvider>
 
       </AppStoreProvider>
       </body>

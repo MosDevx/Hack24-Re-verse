@@ -1,163 +1,118 @@
 "use client";
-import React from "react";
-import { Label } from "@/components/ui/Auth/label";
-import { Input } from "@/components/ui/Auth/input";
-import { cn } from "@/lib/utils";
-import googleAuth from "@/components/ui/Auth/firebaseAuth"
-import { IconBrandFacebook,   IconBrandGoogle,   IconBrandApple,} from "@tabler/icons-react";
-import { FormEvent, useState } from "react";
-import {getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app"
-import firebaseConfig from "@/app/firebaseConfig"
+import React, { useState, FormEvent } from "react";
+import { FaGoogle } from "react-icons/fa";
+import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import firebaseConfig from "@/app/firebaseConfig"; // Adjust import based on your project structure
+import googleAuth from "@/components/ui/Auth/firebaseAuth"; // Adjust import based on your project structure
+import Loadinggif from "@/public/loading.gif";
+import Image from "next/image";
+import Link from "next/link";
 
-export function Signup() {
+const Signup: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  const [email, setEmail] =useState("");
-  const [password, setPassword] =useState("");
-  const [confirmPassword, setConfirmPassword]= useState("");
-  const [error ,setError] =useState<string |null>(null);
-  const app =initializeApp(firebaseConfig)
+  // Initialize Firebase app
+  const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  const handleSubmit =async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted");
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    if(password !== confirmPassword){
+    if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-    try{
-      const userCredential =await createUserWithEmailAndPassword(auth, email, password);
-      console.log("User registered:", userCredential.user);
 
-      // Automatically sign in the user
-      const user = userCredential.user;
-      if (user) {
-        console.log('User signed in:', user);
-        // Redirect or navigate to dashboard after login
-        window.location.href= "/Profile"
-      }
-    }catch(error: any){
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("User registered:", userCredential.user);
+      window.location.href = "/Profile"; // Redirect on successful signup
+    } catch (error: any) {
       console.error("Error signing up:", error.message);
       setError(error.message);
-    };
-
+    }
   };
 
-  function google_auth(){
-    googleAuth()
-  }
+  const google_auth = () => {
+    googleAuth(); // Calls Google sign-in function
+  };
+
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-      <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-        Welcome to  re<span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-fuchsia-600">-Verse</span>
-      </h2>
-      <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300 inline-block">
-        Already have an account?
-      </p>
-      <a
-        href="/login"
-        className="text-blue-600 dark:text-blue-400 text-sm font-medium"> Login
-      </a>
-
-      <form className="my-8" onSubmit={handleSubmit}>
-        <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
-          <LabelInputContainer>
-            <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="John" type="text" />
-          </LabelInputContainer>
-          <LabelInputContainer>
-            <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Doe" type="text" />
-          </LabelInputContainer>
-        </div>
-        <LabelInputContainer className="mb-4">
-          <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" onChange={(e) => setEmail(e.target.value)} />
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-4">
-          <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" onChange={(e) => setPassword(e.target.value)} />
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-8">
-          <Label htmlFor="accountpassword">Confirm Password</Label>
-          <Input
-            id="comfirm password"
-            placeholder="••••••••"
-            type="confirm password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-
-          />
-        </LabelInputContainer>
-
-        <button
-          className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          type="submit"
-        >
-          Sign up &rarr;
-          <BottomGradient />
-        </button>
-
-        <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
-
-        <div className="flex flex-col space-y-4">
-          <button
-            className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-            type="submit"
-          >
-            <IconBrandFacebook className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-              Facebook
-            </span>
-            <BottomGradient />
-          </button>
-          <button
-            className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-            type="submit"
-            onClick={google_auth}
-          >
-            <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-              Google
-            </span>
-            <BottomGradient />
-          </button>
-          <button
-            className=" relative group/btn flex space-x-2 items-center justify-start px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-            type="submit"
-          >
-            <IconBrandApple className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-              Apple
-            </span>
-            <BottomGradient />
-          </button>
-        </div>
-      </form>
-    </div>
-  );
-}
-
-const BottomGradient = () => {
-  return (
-    <>
-      <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-      <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
-    </>
-  );
-};
-
-const LabelInputContainer = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <div className={cn("flex flex-col space-y-2 w-full", className)}>
-      {children}
+    <div className="w-full flex flex-col md:flex-row items-center justify-center gap-8 p-8 bg-gradient-to-r from-gray-50 to-gray-200 dark:from-gray-900 dark:to-gray-700">
+      <div className="max-w-md w-full mx-auto rounded md:rounded-2xl p-4 md:p-8 shadow-lg bg-white dark:bg-gray-800 border font-sans">
+        <h2 className="font-semibold text-2xl text-gray-900 dark:text-gray-200">
+          Welcome <span className="font-bold text-amber-600">Champion</span>
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
+          Already have an account?{" "}
+          <a href="#" className="text-blue-600 dark:text-blue-400 font-medium">
+            Sign up
+          </a>
+        </p>
+        <form onSubmit={handleSubmit} className="mt-6 space-y-6">
+          <div className="space-y-2">
+            <label className="block text-md" htmlFor="email">Email address</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
+              placeholder="someone@example.com"
+            />
+          </div>
+          <div className="space-y-2">
+            <label htmlFor="password" className="block text-md">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
+              placeholder="••••••••"
+            />
+          </div>
+          <div className="space-y-2">
+            <label htmlFor="confirmPassword" className="block text-md">Confirm Password</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
+              placeholder="••••••••"
+            />
+          </div>
+          <div className="space-y-2">
+            <input className="accent-amber-600 dark:accent-gray-800" type="checkbox" id="terms" />
+            <label className="px-3">I accept the terms and conditions</label>
+          </div>
+          <Link href={"/after-sign"}>
+            <button
+              className="bg-amber-500 text-white px-4 py-2 rounded w-full hover:bg-amber-600 transition duration-300"
+              type="submit"
+            >
+              Sign up &rarr;
+            </button>
+          </Link>
+          {error && <p className="text-red-500">{error}</p>}
+          <div className="text-center mt-6">
+            <h4 className="mb-3">----------- <span>OR</span> ------------</h4>
+            <div className="group flex bg-gray-600 items-center justify-center gap-3 py-2 rounded hover:bg-gray-700 transition duration-300">
+              <FaGoogle className="text-white group-hover:text-amber-500" />
+              <button type="button" onClick={google_auth} className="text-white group-hover:text-amber-500">
+                Continue with Google
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div className="w-full md:w-1/2 flex justify-center items-center">
+        <Image src={Loadinggif} alt="Loading" className="w-full h-auto object-cover rounded-lg shadow-lg" />
+      </div>
     </div>
   );
 };
+
+export default Signup;

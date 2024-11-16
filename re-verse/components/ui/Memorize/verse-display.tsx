@@ -1,53 +1,132 @@
 
 "use client"
 
+
+
 import { useState,useRef } from "react"
+import similarity from 'string-similarity';
+import VerseSwitcher from "./verse-switcher";
+import FinalScreen from "./final-screen";	
+
 
 export default function VerseDisplay({ versesArray }: { versesArray: {reference: string, content: string }[] }) {
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const [showDiff, setShowDiff] = useState(false);
+
+	const totalVerses = versesArray.length;
+
+	const [missedVerses, setMissedVerses] = useState([]);
+
+	const [isCompleted, setIsCompleted] = useState(false);
+
+	const [userVerse, setUserVerse] = useState('')
+	const [correctVerse, setCorrectVerse] = useState('')
+
+	const isAtStart = currentIndex === 0;
+	const isAtEnd = currentIndex === versesArray.length - 1;
+	
 
 
-	console.log(versesArray)
-	const handleNext = () => {
+	const handleSkip = () => {
 		if (currentIndex < versesArray.length - 1) {
 			setCurrentIndex((prevIndex) => prevIndex + 1);
 		}
 	};
 
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [inputText, setInputText] = useState('');
 
 	const normalizeText = (text: string) => text.toLowerCase().replace(/  +/g, ' ').replace(/[.,"'\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+
+
+		const checkSimilarity = (verse: string, input: string) => {
+			const verseText = normalizeText(verse);
+			const normalizedInputText = normalizeText(input);
+			const similarityScore = similarity.compareTwoStrings(verseText, normalizedInputText);
+			console.log("score is",similarityScore)
+			return similarityScore >= 0.9;
+		}
+
+
+		const goToNextVerse = () => {
+			setShowDiff(false);
+			setUserVerse('')
+			setCorrectVerse('')
+			setCurrentIndex((prevIndex) => prevIndex + 1);
+		}
+
+
+		const handleCorrectVerse = () => {
+		if(!isAtEnd){
+			goToNextVerse()
+		}else{
+			setIsCompleted(true)
+				//naviaget to end secreen
+			console.log("endgame")
+		}
+		
+		}
+
+		const handleWrongVerse = () => {
+
+			//add to missed verses
+			setMissedVerses([...missedVerses, versesArray[currentIndex]]);
+
+			//change after a delay
+
+			if(!isAtEnd){
+			setTimeout(() => {
+				goToNextVerse()
+			}, 2000)
+
+		}	else{
+				//naviaget to end secreen
+			setIsCompleted(true)
+				console.log("endgame")
+		}
+		
+		}
+
+
 
 
 	const handleCheck = () => {
 		const verse = versesArray[currentIndex];
 		const inputText = inputRef.current?.value || '';
-		const verseText = normalizeText(verse.content);
-		const normalizedInputText = normalizeText(inputText);
-		const isCorrect = verseText == normalizedInputText;
-		import similarity from 'string-similarity';
 
-		const similarityScore = similarity.compareTwoStrings(verseText, normalizedInputText);
-		const isCorrect = similarityScore >= 0.8;
-		const message = isCorrect ? 'Correct!' : 'Incorrect!';
-		console.log(verseText, normalizedInputText, isCorrect);
-		alert(message);
+		const isSimilar = checkSimilarity(verse.content, inputText);
+
+		setUserVerse(normalizeText(inputText))
+		setCorrectVerse(verse.content)
+		setShowDiff(true);
+
+		if(isSimilar){
+			handleCorrectVerse()
+
+		}	else{
+			handleWrongVerse()
+
+		}
+	
 	};
 
-	const isAtStart = currentIndex === 0;
-	const isAtEnd = currentIndex === versesArray.length - 1;
 
 	return (
-		<div className="flex flex-col items-center justify-center py-2 px-4 lg:px-20 bg-gray-50">
-			<h1>{versesArray[currentIndex].reference}</h1>
-			<input type="text" className="border-2 border-gray-300 p-2 rounded-lg w-full" ref={inputRef} placeholder="Type the verse here" />
-			<button className="bg-blue-500 text-white p-2 rounded-lg mt-2" onClick={handleCheck}>
-				Check
-			</button>
-			<button className="bg-blue-500 text-white p-2 rounded-lg mt-2" onClick={handleNext} disabled={isAtEnd}>
-				Next
-			</button>
+		<div className="flex grow bg-slate-50 justify-center h-full items-center w-full">
+		{ isCompleted ? (
+			<FinalScreen missedVerses={missedVerses} totalVerses={totalVerses}/>
+		) : (
+
+			<VerseSwitcher
+			currentIndex={currentIndex}
+			versesArray={versesArray}
+			handleCheck={handleCheck}
+			showDiff={showDiff}
+			correctVerse={correctVerse}
+			userVerse={userVerse}
+			inputRef={inputRef}
+		/>
+		)
+		}
 		</div>
 	);
 }

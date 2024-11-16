@@ -1,17 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/firebaseConfig";
-import googleAuth from "@/components/ui/Auth/firebaseAuth";
+import { getAuth, GoogleAuthProvider, signInWithPopup,signInWithEmailAndPassword } from "firebase/auth";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  // const app = initializeApp(firebaseConfig);
+  // const auth = getAuth(app);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,9 +24,16 @@ const Login: React.FC = () => {
       setError(err.message); // Display error to the user
     }
   };
+  initializeApp(firebaseConfig);
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
 
-  const google_auth = () => {
-    googleAuth();
+  async function google_auth(){
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    
+    // Redirect to profile page (optional)
+    window.location.href = "/after-sign";
   };
 
   return (

@@ -9,6 +9,7 @@ import Loadinggif from "@/public/loading.gif";
 import Image from "next/image";
 import Link from "next/link";
 import {DateInput} from "@nextui-org/date-input"
+import { createUser } from "@/lib/reverse";
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,8 @@ const Signup: React.FC = () => {
   const [lname, setLname] =useState("")
   const  [dob, setDoB]  =useState("");
   const [gender, setGender] = useState("");
+
+  const profilePicUrl ="url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z' clip-rule='evenodd'/%3E%3C/svg%3E")"
 
   // Initialize Firebase app
   const app = initializeApp(firebaseConfig);
@@ -35,6 +38,12 @@ const Signup: React.FC = () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered:", userCredential.user);
+
+      // Create user in Prisma database
+      const createdUser = await createUser(email, fname, lname, profilePicUrl, gender, dob, username);
+
+      console.log("User created successfully:", createdUser);
+
       window.location.href = "/after-sign"; // Redirect on successful signup
     } catch (error: any) {
       console.error("Error signing up:", error.message);
@@ -93,21 +102,26 @@ const Signup: React.FC = () => {
               />
             </div>
             <div className="flex flex-col gap-2 w-full md:w-1/2">
-              <label htmlFor="confirmPassword" className="block text-md text-white">Gender</label>
-              <input
-                type="text"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
-                placeholder=""
-              />
+              <label htmlFor="gender" className="block text-md text-white">Gender</label>
+              <select
+                id="gender"
+                // value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600">
+                <option value="" disabled>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Binary">Binary</option>
+                <option value="Prefer Not To Say">Prefer Not To Say</option>
+              </select>
             </div>
+
           </div>
           <div className="space-y-2">
             <label className="block text-md text-white" htmlFor="email">Email address</label>
             <input
               type="email"
-              value={email}
+              // value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
               placeholder="someone@example.com"
@@ -118,7 +132,7 @@ const Signup: React.FC = () => {
               <label htmlFor="password" className="block text-md text-white">Password</label>
               <input
                 type="password"
-                value={password}
+                // value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
                 placeholder="••••••••"
@@ -128,7 +142,7 @@ const Signup: React.FC = () => {
               <label htmlFor="confirmPassword" className="block text-md text-white">Confirm Password</label>
               <input
                 type="password"
-                value={confirmPassword}
+                // value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
                 placeholder="••••••••"

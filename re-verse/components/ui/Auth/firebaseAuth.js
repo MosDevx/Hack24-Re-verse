@@ -50,47 +50,58 @@ export default async function googleAuth() {
     provider.addScope("profile")
     provider.addScope("email")
     provider.addScope("https://www.googleapis.com/auth/user.birthday.read");
-    provider.addScope("https://www.googleapis.com/auth/user.gender.read");
+    // provider.addScope("https://www.googleapis.com/auth/user.gender.read");
 
     //sign in with google
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
 
     //Extract user details
-    const fname = user.displayName ? user.displayName.split(" ")[0] : "";
-    const lname =user.displayName ?   user.displayName.split(" ")[1] : "";
+    const fname = user.displayName ? user.displayName.split(" ")[0] : "N/A";
+    const lname =user.displayName ?   user.displayName.split(" ")[1] : user.displayName.split(" ")[0] ;
     const email = user.email;
     const profilePicUrl = user.photoURL;
 
-    console.log("Details:", fname,lname, email, profilePicUrl);
+    const username = fname.toLowerCase()+getRandomCharacters(3) ;
++
+    console.log("Details:", fname,lname, email);
+
+    //Get the OAuth access token
+    const credential  =GoogleAuthProvider.credentialFromResult(result);
+    const accessToken = credential?.accessToken
+
+    if (!accessToken) {
+      throw new Error("Failed to retrieve access token");
+    }
 
     //Fetch additional  user info using  Google People API
-    const token = await user.getIdToken();
-    const response = await fetch("https://people.googleapis.com/v1/people/me?personFields=gender,birthdays", {
+    // const token = await user.getIdToken();
+    const response = await fetch("https://people.googleapis.com/v1/people/me?personFields=birthdays", {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       }
     });
 
     const data = await response.json();
-    let gender;
+    let gender ="M / F";
     let dob ;
+    console.log("Data", data)
 
-    if (data.genders && data.genders.length > 0 ){
-      gender = data.genders[0].value
-    }else{
-      gender = "N/A"
-    }
+    // if (data.genders && data.genders.length > 0 ){
+    //   gender = data.genders[0].value
+    // }else{
+    //   gender = "N/A"
+    // }
 
     if (data.birthdays && data.birthdays.length > 0 ){
       const birthday = data.birthdays[0].date;
       dob = `${birthday.year}-${birthday.month}-${birthday.day}`
     }else{
-      dob ="N/A";
+      dob ="0000-00-00";
     }
 
     // Create user in Prisma database
-    const createdUser = await createUser(email, fname, lname, profilePicUrl, gender, dob);
+    const createdUser = await createUser(email, fname, lname, profilePicUrl, gender, dob, username);
 
     console.log("User created successfully:", createdUser);
 
@@ -121,3 +132,10 @@ export default async function googleAuth() {
 //     throw error; // Re-throw the error for handling in your React component
 //   }
 // }
+
+function getRandomCharacters(count) {
+  const characters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0','!', '@', '#','$','%', '&','_'];
+  const shuffled = characters.sort(() => 0.5 - Math.random());
+  const randomChars = shuffled.slice(0, count);
+  return randomChars.join('');
+}

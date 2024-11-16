@@ -1,5 +1,6 @@
 import Image from "next/image";
 import LandingPage from "./landingPage";
+import {Discipleshipsection} from "@/components/ui/After-Sign/Discipleship/Discipleshipsection";
 
 export default function Home() {
   const samples = [{
@@ -12,7 +13,11 @@ export default function Home() {
 
   return (
     <div>
-      <LandingPage />
+      <div>
+        {/* <Discipleshipsection /> */}
+        <LandingPage />
+      </div>
+      
     </div>
       
   );

@@ -85,7 +85,7 @@ const Skeleton = ({ img }: { img: { src: string } }) => (
 
 const items = [
   {
-    title: "The Bible Trivia",
+    title: "Trivia",
     description: "Test your knowledge of the Bible in a fun and engaging way.",
     header: <Skeleton img={Pray1} />,
     icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
@@ -98,7 +98,7 @@ const items = [
     icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "Lessons",
+    title: "Discipleship",
     description: "Let's dive into the Scriptures and discover who God is and His Desires for our Lives.",
     header: <Skeleton img={Pray3} />,
     icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
@@ -117,7 +117,7 @@ const items = [
     icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
   },
   {
-    title: "My Profile",
+    title: "Profile",
     description: "Update your profile and keep track of your progress.",
     header: <Skeleton img={Pray6} />,
     icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,

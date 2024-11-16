@@ -6,16 +6,17 @@ import MultipleChoice from '@/components/ui/multiple-choice';
 import TrueFalse from '@/components/ui/true-false';
 import { motion } from 'framer-motion';
 
-const questions = [
+const questions: { type: string; question: string; answer: string | boolean; options?: string[] }[] = [
   { type: 'true-false', question: 'The Earth is flat.', answer: false },
   { type: 'true-false', question: 'The sun rises in the east.', answer: true },
   { type: 'true-false', question: 'Humans can breathe underwater without any equipment.', answer: false },
+  { type: 'fill-in-blank', question: 'What is the capital of France?', answer: 'Paris' }
 ];
 
 export default function Trivia() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [isCorrectAnswer, setIsCorrectAnswer] = useState(0);
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [userAnswers, setUserAnswers] = useState<any[]>([]);
   const router = useRouter();
   const [isFinished, setIsFinished] = useState(false);
@@ -54,8 +55,8 @@ export default function Trivia() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  const handleAnswer = (isCorrect: boolean, userAnswer: boolean) => {
-    setIsCorrectAnswer(isCorrect);
+  const handleAnswer = (isCorrect: boolean | null, userAnswer: string | boolean) => {
+    setIsCorrectAnswer(isCorrect ?? false);
     setShowResult(true);
     if (isCorrect) {
       setScore(score + 1);
@@ -69,7 +70,7 @@ export default function Trivia() {
   };
 
   const handleSkip = () => {
-    setUserAnswers('');
+    setUserAnswers([]);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
     if (currentQuestionIndex === questions.length - 1) {
       setIsFinished(true);
@@ -80,11 +81,14 @@ export default function Trivia() {
     const currentQuestion = questions[currentQuestionIndex];
     switch (currentQuestion.type) {
       case 'fill-in-blank':
-        return <FillInTheBlank question={currentQuestion.question} correctAnswer={currentQuestion.answer} onAnswer={handleAnswer} />;
+        return <FillInTheBlank question={currentQuestion.question} correctAnswer={typeof currentQuestion.answer === 'string' ? currentQuestion.answer : ''} onAnswer={handleAnswer} />;
       case 'multiple-choice':
         return <MultipleChoice question={currentQuestion.question} options={currentQuestion.options} correctAnswer={currentQuestion.answer} onAnswer={handleAnswer} />;
       case 'true-false':
-        return <TrueFalse question={currentQuestion.question} correctAnswer={currentQuestion.answer} onAnswer={handleAnswer} />;
+        if (typeof currentQuestion.answer === 'boolean') {
+          return <TrueFalse question={currentQuestion.question} correctAnswer={currentQuestion.answer} onAnswer={handleAnswer} />;
+        }
+        return null;
       default:
         return null;
     }

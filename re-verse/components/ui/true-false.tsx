@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 
+
 interface TrueFalseQuestionProps {
-	question: string;
-	correctAnswer: string;
-	onAnswer: (isCorrect: boolean | null, userAnswer: string | boolean) => void;
+    question: string;
+    correctAnswer: boolean;
+    onAnswer: (isCorrect: boolean | null, userAnswer: string | boolean) => void;
 }
+
 
 const TrueFalseQuestion: React.FC<TrueFalseQuestionProps> = ({ question, correctAnswer, onAnswer }) => {
 	const [selectedAnswer, setSelectedAnswer] = useState<boolean | null>(null);
@@ -25,7 +27,7 @@ const TrueFalseQuestion: React.FC<TrueFalseQuestionProps> = ({ question, correct
 
 	const handleAnswer = (answer: boolean) => {
 		setSelectedAnswer(answer);
-		const isCorrectAnswer = (answer.toString().toLowerCase()) === correctAnswer;
+		const isCorrectAnswer = answer === correctAnswer;
 		setIsCorrect(isCorrectAnswer)
 		onAnswer(isCorrectAnswer, answer);
 		setShowResult(true);

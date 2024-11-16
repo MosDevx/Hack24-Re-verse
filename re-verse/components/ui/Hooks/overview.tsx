@@ -31,19 +31,19 @@ const data = [
     category: "Bible Trivia",
     title: "Engage with the Bible in a fun new way",
     src: Image1,
-    content: <Link href="#"></Link>,
+    content: <Link href="/trivia"></Link>,
   },
   {
     category: "Discipleship",
     title: "Learn, earn points and grow in your faith journey",
     src: Image2,
-    content: <Link href="#"></Link>,
+    content: <Link href="/discipleship"></Link>,
   },
   {
     category: "Community",
     title: "Connect with champions reversing the trend with reVerse",
     src: Image3,
-    content: <Link href="#"></Link>,
+    content: <Link href="/Communities"></Link>,
   },
   {
     category: "holyGPT",

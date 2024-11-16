@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { FloatingDock } from "@/components/ui/Bottom-Nav/floating-dock";
 import {
@@ -5,19 +6,18 @@ import {
   IconHome,
   IconLibrary,
   IconUser,
+  IconDeviceGamepad
 } from "@tabler/icons-react";
-import Image from "next/image";
 
-export default function bottomNav() {
+export default function BottomNav() {
   const links = [
     {
       title: "Home",
       icon: (
         <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "/landing-page",
+      href: "/after-sign",
     },
-
     {
       title: "Discipleship Lessons",
       icon: (
@@ -33,6 +33,13 @@ export default function bottomNav() {
       href: "/trivia",
     },
     {
+      title: "Gaming",
+      icon: (
+        <IconDeviceGamepad className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+      ),
+      href: "/trivia",
+    },
+    {
       title: "Profile",
       icon: (
         <IconUser className="h-full w-full text-neutral-500 dark:text-neutral-300" />
@@ -40,10 +47,12 @@ export default function bottomNav() {
       href: "/profile",
     }
   ];
+
   return (
-    <div className="flex items-center justify-center h-[35rem] w-full">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 shadow-lg">
       <FloatingDock
-        mobileClassName="translate-y-20" // only for demo, remove for production
+        mobileClassName="md:hidden flex justify-around py-2"
+        desktopClassName="hidden md:flex justify-around py-2"
         items={links}
       />
     </div>

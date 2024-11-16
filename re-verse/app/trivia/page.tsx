@@ -23,7 +23,7 @@ import { getTrivias, updateUserTriviaScore } from '@/lib/reverse';
 	];
 
 	interface Question {
-		answer: string;
+		answer: string | boolean;
 		id: number;
 		options: string[];
 		question: string;
@@ -34,7 +34,7 @@ import { getTrivias, updateUserTriviaScore } from '@/lib/reverse';
 		const [questions, setQuestions] = useState<Question[]>([]);
 		const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 		const [score, setScore] = useState(0);
-		const [isCorrectAnswer, setIsCorrectAnswer] = useState(0);
+		const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
 		const [userAnswers, setUserAnswers] = useState<any[]>([]);
 
 
@@ -91,12 +91,12 @@ import { getTrivias, updateUserTriviaScore } from '@/lib/reverse';
 		const currentQuestion = questions[currentQuestionIndex];
 	
 
-		const handleAnswer = (isCorrect: boolean, userAnswer:boolean) => {
+		const handleAnswer = (isCorrect: boolean | null, userAnswer: string | boolean) => {
 			
 			console.log('fromhandle ', isCorrect)
 			const currentQuestion = questions[currentQuestionIndex];
 			// const isCorrect = userAnswer === currentQuestion.answer;
-			setIsCorrectAnswer(isCorrect)
+			setIsCorrectAnswer(isCorrect ?? false)
 			setShowResult(true)
 			if (isCorrect) {
 				setScore(score + 1);
@@ -119,7 +119,7 @@ import { getTrivias, updateUserTriviaScore } from '@/lib/reverse';
 
 		const handleSkip = () => {
 			// setSubmittedAnswers([...submittedAnswers, 'Skipped']);
-			setUserAnswers('');
+			setUserAnswers([]);
 			setCurrentQuestionIndex(currentQuestionIndex + 1);
 	
 			// Check if it's the last question
@@ -132,11 +132,11 @@ import { getTrivias, updateUserTriviaScore } from '@/lib/reverse';
 			const currentQuestion = questions[currentQuestionIndex];
 			switch (currentQuestion.type) {
 				case 'fill-in-blank':
-					return <FillInTheBlank question={currentQuestion.question} correctAnswer={currentQuestion.answer} onAnswer={handleAnswer} />;
+					return <FillInTheBlank question={currentQuestion.question} correctAnswer={currentQuestion.answer as string} onAnswer={handleAnswer} />;
 				case 'multiple-choice':
 					return <MultipleChoice question={currentQuestion.question} options={currentQuestion.options} correctAnswer={currentQuestion.answer } onAnswer={handleAnswer} />;
 				case 'true-false':
-					return <TrueFalse question={currentQuestion.question} correctAnswer={currentQuestion.answer} onAnswer={handleAnswer} />;
+					return <TrueFalse question={currentQuestion.question} correctAnswer={currentQuestion.answer as boolean} onAnswer={handleAnswer} />;
 				default:
 					return null;
 			}

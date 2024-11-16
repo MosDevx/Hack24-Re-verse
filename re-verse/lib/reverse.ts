@@ -5,6 +5,42 @@ import {prisma} from "./db";
 // const prisma = new PrismaClient();
 
 
+export async function createUser(email:string, fname: string,lname:string, profilePikUrl:string, gender:string, dob: string, username:string){
+  try {
+    function convertToISOString(dateString: string) {
+      // Parse the date string and create a Date object
+      const date = new Date(dateString);
+    
+      // Check if the date is valid
+      if (isNaN(date.getTime())) {
+        throw new Error("Invalid date format. Expected YYYY-MM-DD.");
+      }
+    
+      // Convert to ISO string
+      return date.toISOString();
+    }
+    const isoString = convertToISOString(dob);
+    
+    const user = await prisma.user.create({
+      data: {
+        email: email,
+        first_name: fname,
+        last_name: lname,
+        username: username,
+        date_of_birth : isoString,
+        profile_picture_url :profilePikUrl,
+        gender : gender,
+        role : "User"
+      },
+    });
+
+    console.log("User created successfully:", user);
+    return user; // You can return the user object for further actions
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw error; // Re-throw the error for handling in your React component
+  }
+}
 
 //function to get levels of a stage
 

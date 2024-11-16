@@ -64,7 +64,7 @@ export default async function googleAuth() {
     console.log("User created successfully:", createdUser);
 
     // Redirect to profile page (optional)
-    window.location.href = "/Profile";
+    window.location.href = "/after-sign";
 
     return user; // Return the user object for further actions (optional)
   } catch (error) {

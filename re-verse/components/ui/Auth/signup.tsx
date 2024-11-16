@@ -15,6 +15,10 @@ const Signup: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [fname, setFname] =useState("");
+  const [lname, setLname] =useState("")
+  const  [dob, setDoB]  =useState("");
+  const [gender, setGender] = useState("");
 
   // Initialize Firebase app
   const app = initializeApp(firebaseConfig);
@@ -31,7 +35,7 @@ const Signup: React.FC = () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered:", userCredential.user);
-      window.location.href = "/Profile"; // Redirect on successful signup
+      window.location.href = "/after-sign"; // Redirect on successful signup
     } catch (error: any) {
       console.error("Error signing up:", error.message);
       setError(error.message);
@@ -60,8 +64,8 @@ const Signup: React.FC = () => {
               <label htmlFor="f_name" className="block text-md text-white">First Name</label>
               <input
                 type="text"
-                value={password} //Dan should implement the correct state for this input
-                onChange={(e) => setPassword(e.target.value)}
+                // value={password} //Dan should implement the correct state for this input
+                onChange={(e) => setFname(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
                 placeholder="John"
               />
@@ -69,9 +73,9 @@ const Signup: React.FC = () => {
             <div className="flex flex-col gap-2 w-full md:w-1/2">
               <label htmlFor="confirmPassword" className="block text-md text-white">Last Name</label>
               <input
-                type="password"
-                value={confirmPassword} //Dan should implement the correct state for this input
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                type="text"
+                // value={confirmPassword} //Dan should implement the correct state for this input
+                onChange={(e) => setLname(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
                 placeholder="Doe"
               />
@@ -81,9 +85,9 @@ const Signup: React.FC = () => {
             <div className="flex flex-col gap-2 pt-2 w-full md:w-1/2">
               <label htmlFor="password" className="block text-md text-white">Date of Birth</label>
               <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type="date"
+                // value={password}
+                onChange={(e) => setDoB(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
                 placeholder="mm/dd/yyyy"
               />

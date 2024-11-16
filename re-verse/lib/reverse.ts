@@ -1,8 +1,8 @@
 "use server";
-import {prisma} from "./db";
-// import { PrismaClient } from "@prisma/client";
+// import {prisma} from "./db";
+import { PrismaClient } from "@prisma/client";
 
-// const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
 
 export async function createUser(email:string, fname: string,lname:string, profilePikUrl:string, gender:string, dob: string, username:string){

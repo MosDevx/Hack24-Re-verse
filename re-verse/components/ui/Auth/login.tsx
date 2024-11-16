@@ -19,7 +19,7 @@ const Login: React.FC = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("User signed in:", userCredential.user);
       // Redirect the user to the dashboard or home page after login
-      window.location.href = "/Profile"; // Replace with your desired route
+      window.location.href = "/after-sign"; 
     } catch (err: any) {
       console.error("Error signing in:", err);
       setError(err.message); // Display error to the user
@@ -50,7 +50,7 @@ const Login: React.FC = () => {
             type="email"
             className="border-2 border-purple-200 dark:border-slate-400 p-2 rounded placeholder-purple-500 dark:placeholder-slate-500 caret-purple-500 dark:caret-slate-500 outline-none focus:border-purple-400 dark:focus:border-slate-500 focus:ring-4 ring-purple-300 dark:ring-slate-500 w-full"
             placeholder="someone@example.com"
-            value={email}
+            // value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -63,7 +63,7 @@ const Login: React.FC = () => {
             type="password"
             className="border-2 border-purple-300 dark:border-slate-400 p-2 rounded w-full outline-none focus:border-purple-400 dark:focus:border-slate-500 focus:ring-4 ring-purple-300 dark:ring-slate-500 caret-purple-500 dark:caret-slate-500 placeholder-purple-500 dark:placeholder-slate-600"
             placeholder="••••••••"
-            value={password}
+            // value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
@@ -74,17 +74,19 @@ const Login: React.FC = () => {
         <button className="dark:bg-slate-50 text-slate-800 px-2 py-1 rounded w-full hover:bg-slate-700 hover:text-slate-100" type="submit">
           Login &rarr;
         </button>
+
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-        <div className="text-center">
-          <h4 className="mb-3">----------- <span>OR</span> -----------</h4>
+
+      </form>
+      <div className="text-center">
+          <h4 className="mb-3 text-white">----------- <span>OR</span> -----------</h4>
           <div className="group flex bg-slate-600 items-center justify-center gap-3 py-1 rounded hover:bg-slate-700">
             <FaGoogle className="group-hover:text-amber-500" />
-            <button type="button" className="group-hover:text-amber-500" onClick={google_auth}>
+            <button type="button" className="group-hover:text-amber-500 font-bold" onClick={google_auth}>
               Continue with Google
             </button>
           </div>
         </div>
-      </form>
     </div>
   );
 };

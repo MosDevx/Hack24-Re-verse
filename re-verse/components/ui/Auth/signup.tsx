@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {DateInput} from "@nextui-org/date-input"
 import { createUser } from "@/lib/reverse";
+import { createUsername } from "@/components/ui/Auth/firebaseAuth";
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -20,9 +21,9 @@ const Signup: React.FC = () => {
   const [lname, setLname] =useState("")
   const  [dob, setDoB]  =useState("");
   const [gender, setGender] = useState("");
-
-  const profilePicUrl ="url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z' clip-rule='evenodd'/%3E%3C/svg%3E")"
-
+  
+  const username =createUsername(fname)
+  const profilePicUrl ="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z' clip-rule='evenodd'/%3E%3C/svg%3E";
   // Initialize Firebase app
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -108,7 +109,7 @@ const Signup: React.FC = () => {
                 // value={gender}
                 onChange={(e) => setGender(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600">
-                <option value="" disabled>Select Gender</option>
+                <option value="" >Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Binary">Binary</option>
@@ -153,14 +154,14 @@ const Signup: React.FC = () => {
             <input className="accent-amber-600 dark:accent-gray-800" type="checkbox" id="terms" />
             <label className="px-3 text-white">I accept the terms and conditions</label>
           </div>
-          <Link href={"/after-sign"}>
+          {/* <Link href={"/after-sign"}> */}
             <button
               className="bg-amber-500 text-white px-4 py-2 rounded w-full hover:bg-amber-600 transition duration-300"
               type="submit"
             >
               Sign up &rarr;
             </button>
-          </Link>
+          {/* </Link> */}
           {error && <p className="text-red-500">{error}</p>}
           <div className="text-center mt-6">
             <h4 className="mb-3">----------- <span>OR</span> ------------</h4>

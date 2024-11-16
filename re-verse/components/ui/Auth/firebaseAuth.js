@@ -26,8 +26,8 @@ export default async function googleAuth() {
     const email = user.email;
     const profilePicUrl = user.photoURL;
 
-    const username = fname.toLowerCase()+getRandomCharacters(3) ;
-+
+    const username = createUsername(fname);
+
     console.log("Details:", fname,lname, email);
 
     //Get the OAuth access token
@@ -78,4 +78,8 @@ function getRandomCharacters(count) {
   const shuffled = characters.sort(() => 0.5 - Math.random());
   const randomChars = shuffled.slice(0, count);
   return randomChars.join('');
+}
+
+export  function createUsername(fname){
+  return fname.toLowerCase()+getRandomCharacters(3) ;
 }

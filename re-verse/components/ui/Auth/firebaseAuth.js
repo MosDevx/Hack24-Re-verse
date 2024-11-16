@@ -1,37 +1,3 @@
-// import firebaseConfig from "@/app/firebaseConfig"
-// import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth"
-// import { initializeApp } from "firebase/app"
-// // import Home from "@/app/Profile/page"
-// import { createUser } from "@/lib/reverse"
-
-
-
-// export default async function googleAuth(){
-//     initializeApp(firebaseConfig)
-//     const auth= getAuth()
-//     const provider =new GoogleAuthProvider()
-//     signInWithPopup(auth, provider)
-//     .then ((result) =>{
-//         const user =result.user
-        
-//         const name= user.displayName
-//         const email = user.email
-//         const profile_pik= user.photoURL
-//         console.log("Details", name, email, profile_pik)
-//         try {
-//             async () =>{await createUser(name, name, email)};
-//         } catch (error) {
-//             console.log("Error:", error)
-//         }
-
-//         window.location.href="/Profile"
-//         return auth;
-//     }) 
-//     .catch((error) =>{
-//         console.log("Error", error)
-//     })
-
-// }
 
 
 import firebaseConfig from "@/app/firebaseConfig";
@@ -87,12 +53,6 @@ export default async function googleAuth() {
     let dob ;
     console.log("Data", data)
 
-    // if (data.genders && data.genders.length > 0 ){
-    //   gender = data.genders[0].value
-    // }else{
-    //   gender = "N/A"
-    // }
-
     if (data.birthdays && data.birthdays.length > 0 ){
       const birthday = data.birthdays[0].date;
       dob = `${birthday.year}-${birthday.month}-${birthday.day}`
@@ -114,24 +74,6 @@ export default async function googleAuth() {
     // Handle errors appropriately (e.g., display an error message to the user)
   }
 }
-
-// export async function createUser(email, firstName, lastName) {
-//   try {
-//     const user = await prisma.user.create({
-//       data: {
-//         email,
-//         firstName,
-//         lastName,
-//       },
-//     });
-
-//     console.log("User created successfully:", user);
-//     return user; // You can return the user object for further actions
-//   } catch (error) {
-//     console.error("Error creating user:", error);
-//     throw error; // Re-throw the error for handling in your React component
-//   }
-// }
 
 function getRandomCharacters(count) {
   const characters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0','!', '@', '#','$','%', '&','_'];

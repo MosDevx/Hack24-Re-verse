@@ -6,7 +6,7 @@ export async function getVersesForUser(userId: number) {
   const today = new Date();
 
   // Fetch due verses
-  const dueVerses = await prisma.user_attempts.findMany({
+  const dueVerses = await prisma.user_attempts3.findMany({
     where: {
       user_id: userId,
       due_date: {

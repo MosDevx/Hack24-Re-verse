@@ -19,7 +19,7 @@ export function Hero() {
         className="relative flex flex-col gap-4 items-center justify-center px-4"
       >
         <div className="text-3xl md:text-7xl font-bold dark:text-white text-center">
-          <span className="text-amber-500">reVerse<sup>✦</sup></span> is the new trend.
+          <span className="text-amber-500">Re-Verse<sup>✦</sup></span> is the new trend.
         </div>
         <div className="font-extralight text-base text-center md:text-4xl dark:text-neutral-200 py-4">
           Join believers from around the world in an interesting journey of faith and encountering Jesus while living in the digital age

@@ -15,7 +15,7 @@ import {
   IconBook,
   IconMail,
   IconBrandInstagram,
-  IconBrandTwitter,
+  IconBrandTwitt
   IconBrandLinkedin,
   IconBrandX,
 } from "@tabler/icons-react";

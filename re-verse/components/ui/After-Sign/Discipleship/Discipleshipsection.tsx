@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Tabs } from "./tabs";
 import { HoverEffect } from "./card-effect";
 import { TextGenerateEffect } from "./text-generate effect";
-import DiscipleshipImage from "@/public/Image/dimage.png";
+import DiscipleshipImage from "@/public/images/dimage.png";
 import { Lessons } from "./lessons"; // Import the Lessons component
 
 const words = `Discipleship is the process of learning from Jesus and becoming more like Him. Welcome Champion, You're in the right place`;

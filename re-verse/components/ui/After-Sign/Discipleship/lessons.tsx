@@ -2,6 +2,21 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import QuizComponent from "../../Trivia/QuizComponent";
+
+
+const christianQuestionsArray: Question[] = [
+  // { type: 'fill-in-blank', question: "Who was swallowed by a big fish?", answer: 'Jonah' },
+  // { type: 'fill-in-blank', question: "What is the first book of the Bible?", answer: 'Genesis' },
+  // { type: 'fill-in-blank', question: "What was the name of Jesus' mother?", answer: 'Mary' },
+  { type: 'multiple-choice', question: 'Who denied Jesus three times before the rooster crowed?', options: ['Peter', 'John', 'James', 'Matthew'], answer: 'Peter' },
+  // { type: 'multiple-choice', question: 'Which of these is one of the fruits of the Spirit?', options: ['Love', 'Wealth', 'Power', 'Honor'], answer: 'Love' },
+  { type: 'multiple-choice', question: 'What did Jesus feed to 5,000 people?', options: ['Fish and bread', 'Bread and wine', 'Fruit and water', 'Meat and bread'], answer: 'Fish and bread' },
+  // { type: 'true-false', question: 'Jesus was born in Nazareth.', answer: false },
+  // { type: 'true-false', question: 'The Bible is made up of 66 books.', answer: true },
+  // { type: 'true-false', question: 'David was the first king of Israel.', answer: false }
+];
+
 
 const articles = [
   {
@@ -121,7 +136,9 @@ export function Lessons() {
       </div>
       <div className="mt-6 w-full">
         <h4 className="text-2xl font-bold mb-4">Quiz</h4>
-        <div className="space-y-4">
+
+        <QuizComponent questionsArray={christianQuestionsArray} />
+        {/* <div className="space-y-4">
           {quizzes.map((quiz, index) => (
             <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
               <h5 className="text-xl font-bold">{quiz.question}</h5>
@@ -134,7 +151,7 @@ export function Lessons() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
         <button
           className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg"
           onClick={handleQuizCompletion}

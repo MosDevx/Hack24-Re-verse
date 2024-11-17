@@ -78,7 +78,7 @@ const Skeleton = ({ img }: { img: { src: string } }) => (
 
 const items = [
   {
-    title: "trivia",
+    title: "Trivia",
     description: "Test your knowledge of the Bible in a fun and engaging way.",
     header: <Skeleton img={{src: "https://media.istockphoto.com/id/1307907411/photo/a-colorful-wooden-block-with-text-trivia-on-wooden-background.jpg?s=1024x1024&w=is&k=20&c=h-A-QpZhCGJlaA7jhMMuFbYp6hNAuFVwPkHgkqmg8tM="}} />,
     icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,

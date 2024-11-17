@@ -33,6 +33,8 @@ export default function VerseDisplay({ versesArray }: { versesArray: {reference:
 		}
 	};
 
+
+
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const normalizeText = (text: string) => text.toLowerCase().replace(/  +/g, ' ').replace(/[.,"'\/#!$%\^&\*;:{}=\-_`~()]/g, '');
@@ -80,7 +82,11 @@ export default function VerseDisplay({ versesArray }: { versesArray: {reference:
 
 		}	else{
 				//naviaget to end secreen
-			setIsCompleted(true)
+		
+
+			setTimeout(() => {
+				setIsCompleted(true)
+			}, 2000)
 				console.log("endgame")
 		}
 		
@@ -108,7 +114,13 @@ export default function VerseDisplay({ versesArray }: { versesArray: {reference:
 		}
 	
 	};
-
+	const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+			handleCheck();
+      // Add your action here, e.g., submit the message
+    }
+	}
 
 	return (
 		<div className="flex grow bg-slate-50 justify-center h-full items-center w-full">
@@ -121,6 +133,7 @@ export default function VerseDisplay({ versesArray }: { versesArray: {reference:
 			versesArray={versesArray}
 			handleCheck={handleCheck}
 			showDiff={showDiff}
+			handleKeyDown={handleKeyDown}	
 			correctVerse={correctVerse}
 			userVerse={userVerse}
 			inputRef={inputRef}

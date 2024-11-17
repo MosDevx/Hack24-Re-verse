@@ -10,7 +10,7 @@ import {
   IconMail
 } from "@tabler/icons-react";
 import Image from "next/image";
-import Placeholder from "@/public/Image/Placeholder.png"
+import Placeholder from "@/public/images/Placeholder.png"
 
 export default function BottomNav() {
   const links = [

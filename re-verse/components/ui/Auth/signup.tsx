@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import firebaseConfig from "@/app/firebaseConfig"; // Adjust import based on your project structure
 import googleAuth from "@/components/ui/Auth/firebaseAuth"; // Adjust import based on your project structure
-import Loadinggif from "@/public/Image/signup.jpg";
+import Loadinggif from "@/public/images/signup.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import {DateInput} from "@nextui-org/date-input"

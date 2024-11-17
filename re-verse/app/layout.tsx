@@ -40,6 +40,7 @@ export default function RootLayout({
         {children}
 
       </AppStoreProvider>
+
       </body>
     </html>
   );

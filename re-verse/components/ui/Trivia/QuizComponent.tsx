@@ -6,7 +6,7 @@ import FillInTheBlank from '@/components/ui/Trivia/fill-in-blank';
 import MultipleChoice from  '@/components/ui/Trivia/multiple-choice'
 import TrueFalse from '@/components/ui/Trivia/true-false';
 import { motion } from 'framer-motion';
-import { updateUserTriviaScore } from '@/lib/reverse';
+// import { updateUserTriviaScore } from '@/lib/reverse';
 import FinalScreen from './final-screen';
 
 
@@ -45,7 +45,7 @@ import FinalScreen from './final-screen';
 
 		const handleSubmitScore = async () => {
 			try {
-			  await updateUserTriviaScore(1);
+			  // await updateUserTriviaScore(1);
 			  console.log("done");
 			} catch (error) {
 			  console.log(error);

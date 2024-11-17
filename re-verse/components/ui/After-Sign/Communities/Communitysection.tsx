@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { IconUsersGroup, IconCalendar } from "@tabler/icons-react";
+import Image from "next/image";
+
 
 interface Community {
   id: string;
@@ -21,9 +23,11 @@ const CommunityCard = ({ community, onSelect }: { community: Community, onSelect
     onClick={() => onSelect(community.id)}
   >
     <div className="w-12 h-12 relative">
-      <img
+      <Image
         src={community.profileImage}
         alt="Community profile"
+        width={30}
+        height={30}
         className="rounded-full object-cover w-full h-full"
       />
     </div>

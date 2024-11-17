@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Pray2 from "@/public/Images/Pray2.png";
 import Pray3 from "@/public/Images/Pray3.png";
+import Image from "next/image";
 
 
 interface Message {
@@ -27,6 +28,77 @@ const dummyMessages: Message[] = [
     time: "10:32 AM",
     content: "Absolutely! Looking forward to it.",
   },
+  {
+    id: "3",
+    senderName: "Michael Brown",
+    profileImage: "/image/Pray5.png",
+    time: "10:35 AM",
+    content: "Don't forget to bring your study guides!"
+  },
+  {
+    id: "4",
+    senderName: "Sarah Johnson",
+    profileImage: "/image/Pray6.png",
+    time: "10:40 AM",
+    content: "Thanks for the reminder, Michael. I’ve got mine ready!"
+  },
+  {
+    id: "5",
+    senderName: "Emma Davis",
+    profileImage: "/image/Pray7.png",
+    time: "10:42 AM",
+    content: "Can someone save me a seat? I might be a few minutes late."
+  },
+  {
+    id: "6",
+    senderName: "Robert Wilson",
+    profileImage: "/image/Pray8.png",
+    time: "10:45 AM",
+    content: "Sure thing, Emma. I’ll make sure we have a spot for you."
+  },
+  {
+    id: "7",
+    senderName: "Olivia Martinez",
+    profileImage: "/image/Pray9.png",
+    time: "10:48 AM",
+    content: "What chapter are we starting with tonight?"
+  },
+  {
+    id: "8",
+    senderName: "Daniel Moore",
+    profileImage: "/image/Pray10.png",
+    time: "10:50 AM",
+    content: "Chapter 4, I believe. It’s about the parables."
+  },
+  {
+    id: "9",
+    senderName: "Sophia Garcia",
+    profileImage: "/image/Pray11.png",
+    time: "10:52 AM",
+    content: "Great, I love studying the parables. They’re so thought-provoking!"
+  },
+  {
+    id: "10",
+    senderName: "William Lopez",
+    profileImage: "/image/Pray12.png",
+    time: "10:55 AM",
+    content: "I’ll bring some snacks for after the session. Any requests?"
+  },
+  {
+    id: "11",
+    senderName: "Isabella Thomas",
+    profileImage: "/image/Pray13.png",
+    time: "10:58 AM",
+    content: "Cookies would be amazing! Thanks, William."
+  },
+  {
+    id: "12",
+    senderName: "James Lee",
+    profileImage: "/image/Pray14.png",
+    time: "11:00 AM",
+    content: "Sounds like it’s going to be a great session. See you all there!"
+  }
+  
 ];
 
 const ChatSection = ({ onClose }: { onClose: () => void }) => {
@@ -58,8 +130,10 @@ const ChatSection = ({ onClose }: { onClose: () => void }) => {
         <div className="overflow-y-auto h-64 p-2 mb-4 border-b border-gray-700">
           {messages.map((message) => (
             <div key={message.id} className="flex items-start mb-3">
-              <img
+              <Image
                 src={message.profileImage}
+                width={20}
+                height={20}
                 alt={message.senderName}
                 className="w-11 h-11 rounded-full mr-3"
               />

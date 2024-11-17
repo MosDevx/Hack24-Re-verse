@@ -1,14 +1,23 @@
 "use client";
 import React from "react";
 import { AnimatedTooltip } from "./animated-tooltip";
+import Loice from "@/public/Image/Loice.jpg";
+import Billy from "@/public/Image/Billy.png";
+import { StaticImageData } from "next/image";
 
-const people = [
+type Person = {
+  id: number;
+  name: string;
+  designation: string;
+  image: StaticImageData | string;
+};
+
+const people: Person[] = [
   {
     id: 1,
-    name: "John Doe",
-    designation: "Software Engineer",
-    image:
-      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
+    name: "Loice",
+    designation: "Strategist",
+    image: Loice,
   },
   {
     id: 2,
@@ -33,10 +42,9 @@ const people = [
   },
   {
     id: 5,
-    name: "Tyler Durden",
-    designation: "Soap Developer",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
+    name: "Billy",
+    designation: "Software Developer",
+    image: Billy,
   },
   {
     id: 6,

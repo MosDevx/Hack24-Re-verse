@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
+import { StaticImageData } from "next/image";
 import {
   motion,
   useTransform,
@@ -16,7 +17,7 @@ export const AnimatedTooltip = ({
     id: number;
     name: string;
     designation: string;
-    image: string;
+    image: StaticImageData | string;
   }[];
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

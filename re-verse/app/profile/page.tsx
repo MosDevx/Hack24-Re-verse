@@ -5,7 +5,7 @@ import ProfilePicture from "../components/ProfilePic";
 import StreakTracker from "../components/StreakTracker";
 import LevelIndicator from "../components/LevelIndicator";
 import Leaderboard from "../components/LeaderBoard";
-import { getUserData } from "@/lib/reverse";
+// import { getUserData } from "@/lib/reverse";
 
 
 export default function Home() {
@@ -14,8 +14,8 @@ const [userDetails, setUserDetails] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const userData = await getUserData(1);
-      console.log(userData);
+      // const userData = await getUserData(1);
+      // console.log(userData);
     };
 
     fetchUserData();

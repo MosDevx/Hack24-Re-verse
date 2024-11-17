@@ -15,13 +15,13 @@ import {
   IconBook,
   IconMail,
   IconBrandInstagram,
-  IconBrandTwitt
   IconBrandLinkedin,
   IconBrandX,
 } from "@tabler/icons-react";
 import Image from "next/image";
 import Placeholder from "@/public/images/Placeholder.png";
 import { DailyVerse } from "./daily-verse";
+import Link from "next/link";
 
 
 export function Homepage() {
@@ -39,9 +39,21 @@ export function Homepage() {
             <h4 className="text-lg text-slate-200 font-semibold">Welcome <span className="text-amber-500">Billy<sup>✦</sup></span></h4>
             <p className="text-sm text-slate-300 text-center">We're glad that you are back!!</p>
             <div className="mt-4 w-full space-y-3">
-              <button className="w-full border border-slate-900 shadow-lg rounded-md flex items-center justify-center gap-2 py-2 text-white bg-blue-600 hover:bg-blue-700 transition duration-300"><IconDeviceGamepad /> Play some fun games</button>
-              <button className="w-full border border-slate-900 shadow-lg rounded-md flex items-center justify-center gap-2 py-2 text-white bg-green-600 hover:bg-green-700 transition duration-300"><IconBook /> Continue Learning</button>
-              <button className="w-full border border-slate-900 shadow-lg rounded-md flex items-center justify-center gap-2 py-2 text-white bg-orange-600 hover:bg-orange-700 transition duration-300"><IconBulb /> Juggle my memory </button>
+                <Link href="/trivia" className="mt-4 ">
+                <button className="w-full border border-slate-900 shadow-lg rounded-md flex items-center justify-center gap-2 py-2 text-white bg-blue-600 hover:bg-blue-700 transition duration-300">
+                  <IconDeviceGamepad /> Play Bible games
+                </button>
+                </Link>
+                <Link href="/discipleship" className="mt-4 ">
+                <button className="w-full border border-slate-900 shadow-lg rounded-md flex items-center justify-center gap-2 py-2 text-white bg-green-600 hover:bg-green-700 transition duration-300">
+                  <IconBook /> Continue Learning
+                </button>
+                </Link>
+                <Link href="/memorize" className="mt-4 ">
+                <button className="w-full border border-slate-900 shadow-lg rounded-md flex items-center justify-center gap-2 py-2 text-white bg-orange-600 hover:bg-orange-700 transition duration-300">
+                  <IconBulb /> Memory Verse Practice
+                </button>
+                </Link>
             </div>
             <h3 className="text-lg text-neutral-300 text-center mt-6 mb-3">Contact Us</h3>
             <div className="flex items-center justify-evenly gap-3">

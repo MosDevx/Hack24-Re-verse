@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import FillInTheBlank from '@/components/ui/fill-in-blank';
-import MultipleChoice from '@/components/ui/multiple-choice';
-import TrueFalse from '@/components/ui/true-false';
+import FillInTheBlank from '@/components/ui/Trivia/fill-in-blank';
+import MultipleChoice from '@/components/ui/Trivia/multiple-choice';
+import TrueFalse from '@/components/ui/Trivia/true-false';
 import { motion } from 'framer-motion';
 
 const questions: { type: string; question: string; answer: string | boolean; options?: string[] }[] = [

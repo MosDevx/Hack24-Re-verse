@@ -1,171 +1,33 @@
-"use client";
-import React from 'react';
-import { useState,useEffect } from 'react';
-// Importing question components (assuming these components are already created)
-import FillInTheBlank from '@/components/ui/fill-in-blank';
-import MultipleChoice from  '@/components/ui/multiple-choice'
-import TrueFalse from '@/components/ui/true-false';
-import { motion } from 'framer-motion';
-import { getTrivias, updateUserTriviaScore } from '@/lib/reverse';
+import QuizComponent from "@/components/ui/Trivia/QuizComponent";
 
-
-
-	const questions = [
-		{ type: 'fill-in-blank', question: " What's the capital of Farnce? ", answer: 'Paris' },
-		{ type: 'fill-in-blank', question: "What's the largest planet in our solar system? ", answer: 'Jupiter' },
-		{ type: 'fill-in-blank', question: "What's the chemical symbol for water? ", answer: 'H2O' },
-		{ type: 'multiple-choice', question: 'What is the capital of Italy?', options: ['Rome', 'Paris', 'Berlin', 'Madrid'], answer: 'Rome' },
-		{ type: 'multiple-choice', question: 'Which planet is known as the Red Planet?', options: ['Earth', 'Mars', 'Jupiter', 'Saturn'], answer: 'Mars' },
-		{ type: 'multiple-choice', question: 'What is the largest mammal?', options: ['Elephant', 'Blue Whale', 'Giraffe', 'Rhino'], answer: 'Blue Whale' },
-		{ type: 'true-false', question: 'The Earth is flat.', answer: false },
-		{ type: 'true-false', question: 'The sun rises in the east.', answer: true },
-		{ type: 'true-false', question: 'Humans can breathe underwater without any equipment.', answer: false }
-	];
-
-	interface Question {
-		answer: string | boolean;
-		id: number;
-		options: string[];
-		question: string;
-		type: string;
-	  }
-
-	export default function Home() {
-		const [questions, setQuestions] = useState<Question[]>([]);
-		const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-		const [score, setScore] = useState(0);
-		const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false);
-		const [userAnswers, setUserAnswers] = useState<any[]>([]);
-
-
-		const [isFinished, setIsFinished] = useState(false);
-
-		const [showResult, setShowResult] = useState(false);
+interface Question {
+	type: string;
+	answer: string | boolean;
+	id?: number;
+	options?: string[];
+	question: string;
 	
-		useEffect(() => {
-			if (showResult) {
-				const timer = setTimeout(() => {
-					setShowResult(false);
-				}, 1300); // Adjust the timeout duration as needed
-	
-				return () => clearTimeout(timer);
-			}
-		}, [showResult]);
-
-
-		const handleSubmitScore = async () => {
-			try {
-			  await updateUserTriviaScore(1);
-			  console.log("done");
-			} catch (error) {
-			  console.log(error);
-			}
-		  };
-
-		useEffect(() => {
-			const fetchQuestions = async () => {
-			  const result: Question[] = await getTrivias();
-			  console.log(result);
-			  setQuestions(result);
-			};
-		
-			fetchQuestions();
-		  }, []);
-	
-		if (isFinished) {
-			return (
-				<div className="flex flex-col items-center justify-center h-screen">
-					<h1 className="text-4xl font-bold mb-4">Your Score: {score} out of {questions.length}</h1>
-					<button 
-						onClick={handleSubmitScore} 
-						className="bg-blue-500 text-white p-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
-					>
-						Done !!
-					</button>
-				</div>
-			);
-		}
-	
-		if (!questions.length) return <div>Loading...</div>;
-	
-		const currentQuestion = questions[currentQuestionIndex];
-	
-
-		const handleAnswer = (isCorrect: boolean | null, userAnswer: string | boolean) => {
-			
-			console.log('fromhandle ', isCorrect)
-			const currentQuestion = questions[currentQuestionIndex];
-			// const isCorrect = userAnswer === currentQuestion.answer;
-			setIsCorrectAnswer(isCorrect ?? false)
-			setShowResult(true)
-			if (isCorrect) {
-				setScore(score + 1);
-			}
-			setUserAnswers([...userAnswers, { question: currentQuestion.question, userAnswer, isCorrect }]);
-			if (currentQuestionIndex < questions.length - 1) {
-				setCurrentQuestionIndex(currentQuestionIndex + 1);
-			} else {
-				setIsFinished(true)
-				//! Submit answers to backend
-				// fetch('/api/submit-answers', {
-				// 	method: 'POST',
-				// 	headers: {
-				// 		'Content-Type': 'application/json'
-				// 	},
-				// 	body: JSON.stringify({ userAnswers, score })
-				// });
-			}
-		};
-
-		const handleSkip = () => {
-			// setSubmittedAnswers([...submittedAnswers, 'Skipped']);
-			setUserAnswers([]);
-			setCurrentQuestionIndex(currentQuestionIndex + 1);
-	
-			// Check if it's the last question
-			if (currentQuestionIndex === questions.length - 1) {
-				setIsFinished(true);
-			}
-		};
-
-		const renderQuestion = () => {
-			const currentQuestion = questions[currentQuestionIndex];
-			switch (currentQuestion.type) {
-				case 'fill-in-blank':
-					return <FillInTheBlank question={currentQuestion.question} correctAnswer={currentQuestion.answer as string} onAnswer={handleAnswer} />;
-				case 'multiple-choice':
-					return <MultipleChoice question={currentQuestion.question} options={currentQuestion.options} correctAnswer={currentQuestion.answer } onAnswer={handleAnswer} />;
-				case 'true-false':
-					return <TrueFalse question={currentQuestion.question} correctAnswer={currentQuestion.answer as boolean} onAnswer={handleAnswer} />;
-				default:
-					return null;
-			}
-		};
-
-		return (
-			<div className="flex flex-col items-center  justify-center h-screen" >
-				<h1 style={{ textAlign: 'center', fontSize: '3rem' }}>Trivia Questions</h1>
-				<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
-
-				{renderQuestion()}
-				<button 	className="bg-blue-500 text-white p-2 w-24 rounded" onClick={handleSkip}>Skip</button>
-			
-			
-				{showResult && (
-				<motion.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					className={`mt-4 p-2 rounded ${
-						isCorrectAnswer ? 'bg-green-200' : 'bg-red-200'
-					}`}
-				>
-					{isCorrectAnswer ? 'Correct!' : 'Incorrect, try again.'}
-				</motion.div>
-			)}
-				<p>Score: {score}</p>
-			</div>
-			</div>
-
-		);
 	}
+
+
+
+export default async function Trivia(){
+
+	const christianQuestionsArray: Question[] = [
+    // { type: 'fill-in-blank', question: "Who was swallowed by a big fish?", answer: 'Jonah' },
+    // { type: 'fill-in-blank', question: "What is the first book of the Bible?", answer: 'Genesis' },
+    // { type: 'fill-in-blank', question: "What was the name of Jesus' mother?", answer: 'Mary' },
+    { type: 'multiple-choice', question: 'Who denied Jesus three times before the rooster crowed?', options: ['Peter', 'John', 'James', 'Matthew'], answer: 'Peter' },
+    // { type: 'multiple-choice', question: 'Which of these is one of the fruits of the Spirit?', options: ['Love', 'Wealth', 'Power', 'Honor'], answer: 'Love' },
+    { type: 'multiple-choice', question: 'What did Jesus feed to 5,000 people?', options: ['Fish and bread', 'Bread and wine', 'Fruit and water', 'Meat and bread'], answer: 'Fish and bread' },
+    // { type: 'true-false', question: 'Jesus was born in Nazareth.', answer: false },
+    // { type: 'true-false', question: 'The Bible is made up of 66 books.', answer: true },
+    // { type: 'true-false', question: 'David was the first king of Israel.', answer: false }
+];
+
+		return(
+				<div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-blue-50 to-purple-100 p-4">
+						<QuizComponent questionsArray={christianQuestionsArray} />
+				</div>
+		)
+}

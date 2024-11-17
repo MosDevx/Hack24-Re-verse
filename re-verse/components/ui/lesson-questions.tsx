@@ -2,9 +2,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 // Importing question components (assuming these components are already created)
-import FillInTheBlank from "@/components/ui/fill-in-blank";
-import MultipleChoice from "@/components/ui/multiple-choice";
-import TrueFalse from "@/components/ui/true-false";
+import FillInTheBlank from "@/components/ui/Trivia/fill-in-blank";
+import MultipleChoice from "@/components/ui/Trivia/multiple-choice";
+import TrueFalse from "@/components/ui/Trivia/true-false";
 import { motion } from "framer-motion";
 import {
   getLevelTriviaByLevelId,

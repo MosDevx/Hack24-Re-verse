@@ -3,7 +3,7 @@ import React, { useState ,useEffect} from 'react';
 import { motion } from 'framer-motion';
 
 export const MultipleChoiceQuestion = ({ question, options, correctAnswer,onAnswer }) => {
-	const [selectedOption, setSelectedOption] = useState(null);
+	const [selectedOption, setSelectedOption] = useState<string | null>(null);
 	const [isCorrect, setIsCorrect] = useState(false);
 	const [showResult, setShowResult] = useState(false);
 	// const [userAnswer, setUserAnswer] = useState('');
@@ -14,10 +14,14 @@ export const MultipleChoiceQuestion = ({ question, options, correctAnswer,onAnsw
 	
 	}, [showResult]);
 
-	const handleOptionChange = (event) => {
+	const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSelectedOption(event.target.value);
-		setIsCorrect(event.target.value === correctAnswer);
-		onAnswer(isCorrect,event.target.value )
+		const ans: boolean = event.target.value == correctAnswer;
+		setIsCorrect(ans);
+		onAnswer(ans, event.target.value);
+		console.log("isCorrect", ans);
+		console.log("ans", ans);
+
 		setShowResult(true)
 
 	};
@@ -27,18 +31,24 @@ export const MultipleChoiceQuestion = ({ question, options, correctAnswer,onAnsw
 			<h3 className="text-lg font-semibold mb-4">{question}</h3>
 			<form>
 				{options.map((option, index) => (
-					<div key={index} className="mb-2">
-						<label className="flex items-center">
+					<motion.div 
+						key={index} 
+						className="mb-2 p-2 w-3/5 mx-auto text-center border rounded-md shadow-sm hover:shadow-md transition-shadow duration-300"
+						whileHover={{ scale: 1.05, backgroundColor: '#f0fff0' }}
+						whileTap={{ scale: 0.95, backgroundColor: '#f0fff0' }}
+			
+					>
+						<label className="flex flex-col items-center justify-center cursor-pointer">
 							<input
 								type="radio"
 								value={option}
 								checked={selectedOption === option}
 								onChange={handleOptionChange}
-								className="mr-2"
+								className="mr-2 accent-blue-500 hidden"
 							/>
-							{option}
+							<span className="text-gray-700 font-bold">{option}</span>
 						</label>
-					</div>
+					</motion.div>
 				))}
 			</form>
 			{/* {showResult && (

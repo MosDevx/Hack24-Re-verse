@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import logo from '@/public/Image/Reverse Logo.jpeg';
+import logo from '@/public/images/Reverse Logo.jpeg';
 
 const Navbar: React.FC = () => {
   const router = useRouter();

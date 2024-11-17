@@ -2,11 +2,11 @@
 import Image from "next/image";
 import React from "react";
 import { Carousel, Card } from "@/components/ui/Hooks/apple-cards-carousel";
-import Image1 from "@/public/Image/Image-1.jpg";
-import Image2 from "@/public/Image/Image-2.jpg";
-import Image3 from "@/public/Image/Image-3.jpg";
-import Image4 from "@/public/Image/Image-4.jpg";
-import Image5 from "@/public/Image/Bible4.jpg";
+import Image1 from "@/public/images/Image-1.jpg";
+import Image2 from "@/public/images/Image-2.jpg";
+import Image3 from "@/public/images/Image-3.jpg";
+import Image4 from "@/public/images/Image-4.jpg";
+import Image5 from "@/public/images/Bible4.jpg";
 import Link from "next/link";
 
 export function Overview() {

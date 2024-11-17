@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Bible4 from "@/public/Image/Bible4.jpg";
+import Bible4 from "@/public/images/Bible4.jpg";
 
 export function DailyVerse() {
   return (

@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { AnimatedTooltip } from "./animated-tooltip";
-import Loice from "@/public/Image/Loice.jpg";
-import Billy from "@/public/Image/Billy.png";
+import Loice from "@/public/images/Loice.jpg";
+import Billy from "@/public/images/Billy.png";
 import { StaticImageData } from "next/image";
 
 type Person = {

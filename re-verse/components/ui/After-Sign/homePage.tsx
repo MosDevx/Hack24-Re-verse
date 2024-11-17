@@ -20,7 +20,7 @@ import {
   IconBrandX,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import Placeholder from "@/public/Image/Placeholder.png";
+import Placeholder from "@/public/images/Placeholder.png";
 import { DailyVerse } from "./daily-verse";
 
 

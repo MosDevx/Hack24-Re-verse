@@ -6,7 +6,7 @@ import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/firebaseConfig";
 import googleAuth from "@/components/ui/Auth/firebaseAuth";
 import Image from "next/image";
-import welcome from "@/public/Image/welcome.png";
+import welcome from "@/public/images/welcome.png";
 import Link from "next/link";
 
 const Login: React.FC = () => {

@@ -7,7 +7,7 @@ import MultipleChoice from  '@/components/ui/Trivia/multiple-choice'
 import TrueFalse from '@/components/ui/Trivia/true-false';
 import { motion } from 'framer-motion';
 import { updateUserTriviaScore } from '@/lib/reverse';
-
+import FinalScreen from './final-screen';
 
 
 
@@ -65,15 +65,17 @@ import { updateUserTriviaScore } from '@/lib/reverse';
 		if (isFinished) {
 			console.log("useranswmers",userAnswers);
 			return (
-				<div className="flex flex-col items-center justify-center h-screen">
-					<h1 className="text-4xl font-bold mb-4">Your Score: {score} </h1>
-					<button 
-						onClick={handleSubmitScore} 
-						className="bg-blue-500 text-white p-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
-					>
-						Done !!
-					</button>
-				</div>
+
+				<FinalScreen score={score} missedQuestions={userAnswers} totalQuestions={questions.length} />		
+				// <div className="flex flex-col items-center justify-center h-screen">
+				// 	<h1 className="text-4xl font-bold mb-4">Your Score: {score} </h1>
+				// 	<button 
+				// 		onClick={handleSubmitScore} 
+				// 		className="bg-blue-500 text-white p-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+				// 	>
+				// 		Done !!
+				// 	</button>
+				// </div>
 			);
 		}
 	
@@ -89,6 +91,8 @@ import { updateUserTriviaScore } from '@/lib/reverse';
 			setShowResult(true)
 			if (isCorrect) {
 				setScore(score + 10);
+			}else{
+				setUserAnswers([...userAnswers, { question: currentQuestion.question, answer: currentQuestion.answer}]);
 			}
 			// setUserAnswers([...userAnswers, { question: currentQuestion.question, userAnswer, isCorrect }]);
 			if (currentQuestionIndex < questions.length - 1) {
@@ -113,7 +117,7 @@ import { updateUserTriviaScore } from '@/lib/reverse';
 
 			//record skipped question
 			const currentQuestion = questions[currentQuestionIndex];
-			setUserAnswers([...userAnswers, { question: currentQuestion.question, userAnswer: 'Skipped', isCorrect: false }]);
+			setUserAnswers([...userAnswers, { question: currentQuestion.question, answer: currentQuestion.answer}]);
 			if (currentQuestionIndex < questions.length - 1) {
 				setCurrentQuestionIndex(currentQuestionIndex + 1);
 			} else {

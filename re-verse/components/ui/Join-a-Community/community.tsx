@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from "next/link";
-import communityPic from '@/public/Image/Bible4.jpg'; 
+import communityPic from '@/public/images/Bible4.jpg'; 
 
 function JoinCommunity() {
   return (

@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import firebaseConfig from "@/app/firebaseConfig";
-import googleAuth from "@/components/ui/Auth/firebaseAuth";
+import { getAuth, GoogleAuthProvider, signInWithPopup,signInWithEmailAndPassword } from "firebase/auth";
 import Image from "next/image";
 import welcome from "@/public/images/welcome.png";
 import Link from "next/link";
@@ -13,8 +12,8 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  // const app = initializeApp(firebaseConfig);
+  // const auth = getAuth(app);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,15 +21,22 @@ const Login: React.FC = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("User signed in:", userCredential.user);
       // Redirect the user to the dashboard or home page after login
-      window.location.href = "/Profile"; // Replace with your desired route
+      window.location.href = "/after-sign"; 
     } catch (err: any) {
       console.error("Error signing in:", err);
       setError(err.message); // Display error to the user
     }
   };
+  initializeApp(firebaseConfig);
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
 
-  const google_auth = () => {
-    googleAuth();
+  async function google_auth(){
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    
+    // Redirect to profile page (optional)
+    window.location.href = "/after-sign";
   };
 
   return (
@@ -50,7 +56,7 @@ const Login: React.FC = () => {
             <label className="block text-md text-gray-900 dark:text-gray-200" htmlFor="email">Email address</label>
             <input
               type="email"
-              value={email}
+              // value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
               placeholder="someone@example.com"
@@ -60,7 +66,7 @@ const Login: React.FC = () => {
             <label className="block text-md text-gray-900 dark:text-gray-200" htmlFor="password">Password</label>
             <input
               type="password"
-              value={password}
+              // value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
               placeholder="••••••••"
@@ -73,18 +79,20 @@ const Login: React.FC = () => {
           <button className="bg-amber-500 text-white px-4 py-2 rounded w-full hover:bg-amber-600 transition duration-300" type="submit">
             Login &rarr;
           </button>
-          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-          <div className="text-center mt-6">
-            <h4 className="mb-3">----------- <span>OR</span> ------------</h4>
+  
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+  
+      </form>
+      <div className="text-center mt-6">
+            <h4 className="mb-3 text-white">----------- <span>OR</span> ------------</h4>
             <div className="group flex bg-gray-600 items-center justify-center gap-3 py-2 rounded hover:bg-gray-700 transition duration-300">
               <FaGoogle className="text-white group-hover:text-amber-500" />
-              <button type="button" onClick={google_auth} className="text-white group-hover:text-amber-500">
+              <button type="button" onClick={google_auth} className="text-white group-hover:text-amber-500 font-bold">
                 Continue with Google
               </button>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
       <div className="w-full md:w-[35rem] flex justify-center items-center">
         <Image src={welcome} alt="welcome back" className="w-full h-auto object-cover rounded-lg shadow-lg" />
       </div>

@@ -9,13 +9,21 @@ import Loadinggif from "@/public/images/signup.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import {DateInput} from "@nextui-org/date-input"
+import { createUser } from "@/lib/reverse";
+import { createUsername } from "@/components/ui/Auth/firebaseAuth";
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-
+  const [fname, setFname] =useState("");
+  const [lname, setLname] =useState("")
+  const  [dob, setDoB]  =useState("");
+  const [gender, setGender] = useState("");
+  
+  const username =createUsername(fname)
+  const profilePicUrl ="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z' clip-rule='evenodd'/%3E%3C/svg%3E";
   // Initialize Firebase app
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -31,7 +39,13 @@ const Signup: React.FC = () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered:", userCredential.user);
-      window.location.href = "/Profile"; // Redirect on successful signup
+
+      // Create user in Prisma database
+      const createdUser = await createUser(email, fname, lname, profilePicUrl, gender, dob, username);
+
+      console.log("User created successfully:", createdUser);
+
+      window.location.href = "/after-sign"; // Redirect on successful signup
     } catch (error: any) {
       console.error("Error signing up:", error.message);
       setError(error.message);
@@ -60,8 +74,8 @@ const Signup: React.FC = () => {
               <label htmlFor="f_name" className="block text-md text-white">First Name</label>
               <input
                 type="text"
-                value={password} //Dan should implement the correct state for this input
-                onChange={(e) => setPassword(e.target.value)}
+                // value={password} //Dan should implement the correct state for this input
+                onChange={(e) => setFname(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
                 placeholder="John"
               />
@@ -69,9 +83,9 @@ const Signup: React.FC = () => {
             <div className="flex flex-col gap-2 w-full md:w-1/2">
               <label htmlFor="confirmPassword" className="block text-md text-white">Last Name</label>
               <input
-                type="password"
-                value={confirmPassword} //Dan should implement the correct state for this input
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                type="text"
+                // value={confirmPassword} //Dan should implement the correct state for this input
+                onChange={(e) => setLname(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
                 placeholder="Doe"
               />
@@ -81,29 +95,34 @@ const Signup: React.FC = () => {
             <div className="flex flex-col gap-2 pt-2 w-full md:w-1/2">
               <label htmlFor="password" className="block text-md text-white">Date of Birth</label>
               <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type="date"
+                // value={password}
+                onChange={(e) => setDoB(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
                 placeholder="mm/dd/yyyy"
               />
             </div>
             <div className="flex flex-col gap-2 w-full md:w-1/2">
-              <label htmlFor="confirmPassword" className="block text-md text-white">Gender</label>
-              <input
-                type="text"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
-                placeholder=""
-              />
+              <label htmlFor="gender" className="block text-md text-white">Gender</label>
+              <select
+                id="gender"
+                // value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600">
+                <option value="" >Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Binary">Binary</option>
+                <option value="Prefer Not To Say">Prefer Not To Say</option>
+              </select>
             </div>
+
           </div>
           <div className="space-y-2">
             <label className="block text-md text-white" htmlFor="email">Email address</label>
             <input
               type="email"
-              value={email}
+              // value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
               placeholder="someone@example.com"
@@ -114,7 +133,7 @@ const Signup: React.FC = () => {
               <label htmlFor="password" className="block text-md text-white">Password</label>
               <input
                 type="password"
-                value={password}
+                // value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
                 placeholder="••••••••"
@@ -124,7 +143,7 @@ const Signup: React.FC = () => {
               <label htmlFor="confirmPassword" className="block text-md text-white">Confirm Password</label>
               <input
                 type="password"
-                value={confirmPassword}
+                // value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="border-2 border-gray-300 dark:border-gray-600 p-2 rounded w-full outline-none focus:border-amber-500 focus:ring-4 ring-amber-300 dark:ring-gray-600"
                 placeholder="••••••••"
@@ -135,14 +154,14 @@ const Signup: React.FC = () => {
             <input className="accent-amber-600 dark:accent-gray-800" type="checkbox" id="terms" />
             <label className="px-3 text-white">I accept the terms and conditions</label>
           </div>
-          <Link href={"/after-sign"}>
+          {/* <Link href={"/after-sign"}> */}
             <button
               className="bg-amber-500 text-white px-4 py-2 rounded w-full hover:bg-amber-600 transition duration-300"
               type="submit"
             >
               Sign up &rarr;
             </button>
-          </Link>
+          {/* </Link> */}
           {error && <p className="text-red-500">{error}</p>}
           <div className="text-center mt-6">
             <h4 className="mb-3">----------- <span>OR</span> ------------</h4>

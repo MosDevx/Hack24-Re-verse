@@ -90,22 +90,25 @@ const Skeleton = ({ img }: { img: { src: string } }) => (
 
 const items = [
   {
-    title: "Trivia",
+    title: "trivia",
     description: "Test your knowledge of the Bible in a fun and engaging way.",
     header: <Skeleton img={{src: "https://media.istockphoto.com/id/1307907411/photo/a-colorful-wooden-block-with-text-trivia-on-wooden-background.jpg?s=1024x1024&w=is&k=20&c=h-A-QpZhCGJlaA7jhMMuFbYp6hNAuFVwPkHgkqmg8tM="}} />,
     icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
+    link: "/trivia",
   },
   {
     title: "Communities",
     description: "Explore and connect with like-minded champions in your faith journey.",
     header: <Skeleton img={{src: "https://media.istockphoto.com/id/1785808259/photo/networking-opportunities.webp?a=1&b=1&s=612x612&w=0&k=20&c=qmszxK2rLqgwhOdlKtXaX9LpfzCRP_T05NtRakuURGs="}} />,
     icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
+    link: "/communities",
   },
   {
     title: "discipleship",
     description: "Let's dive into the Scriptures and discover who God is and His Desires for our Lives.",
     header: <Skeleton img={{src: "https://plus.unsplash.com/premium_photo-1661719880750-4c0de579cd09?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8RGlzY2lwbGVzaGlwfGVufDB8fDB8fHww"}} />,
     icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
+    link: "/discipleship",
   },
   {
     title: "My Daily Devotion",
@@ -113,23 +116,27 @@ const items = [
       "Let's start the day with a prayer and a devotion to set the tone for the day.",
     header: <Skeleton img={{src: "https://media.istockphoto.com/id/1126359556/photo/heart-shaped-open-bible-book-pages.webp?a=1&b=1&s=612x612&w=0&k=20&c=8TCMOXdaPO2LKYnTnZ0uoAhSq-d5rBHoVrZq8bWqygQ="}} />,
     icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
+    link: "/daily-devotion",
   },
   {
     title: "holyGPT",
     description: "We're developing an AI-powered tool that will help you in your Bible Study and Faith Journey.",
     header: <Skeleton img={{src: "https://media.istockphoto.com/id/1494104649/photo/ai-chatbot-artificial-intelligence-digital-concept.webp?a=1&b=1&s=612x612&w=0&k=20&c=bSNvWwiLdPpa57uxQdncwcpu9Xt-NJSsmIBMxNxLQfw="}} />,
     icon: <IconArrowWaveRightUp className="h-4 w-4 text-neutral-500" />,
+    link: "/holygpt",
   },
   {
     title: "My Profile",
     description: "Update your profile and keep track of your progress.",
     header: <Skeleton img={{src: "https://plus.unsplash.com/premium_photo-1674068279574-92b0a56e660e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TG92ZXxlbnwwfHwwfHx8MA%3D%3D"}} />,
     icon: <IconBoxAlignTopLeft className="h-4 w-4 text-neutral-500" />,
+    link: "/profile",
   },
   {
     title: "Articles",
     description: "Explore articles on faith, life, and the Bible.",
     header: <Skeleton img={{src: "https://media.istockphoto.com/id/1550575198/photo/jesus-saves-declares-christian-newspaper-headline.webp?a=1&b=1&s=612x612&w=0&k=20&c=kW6330LMLEG8WVUnCI1IBwF_pbqhQn5DCIdkLQVzf2g="}} />,
     icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
+    link: "/articles",
   },
 ];

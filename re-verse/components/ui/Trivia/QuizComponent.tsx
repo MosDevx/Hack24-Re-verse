@@ -114,13 +114,13 @@ import { updateUserTriviaScore } from '@/lib/reverse';
 			//record skipped question
 			const currentQuestion = questions[currentQuestionIndex];
 			setUserAnswers([...userAnswers, { question: currentQuestion.question, userAnswer: 'Skipped', isCorrect: false }]);
-			setCurrentQuestionIndex(currentQuestionIndex + 1);
-	
-			// Check if it's the last question
-			if (currentQuestionIndex === questions.length - 1) {
+			if (currentQuestionIndex < questions.length - 1) {
+				setCurrentQuestionIndex(currentQuestionIndex + 1);
+			} else {
+
 				setTimeout(() => {
 					setIsFinished(true);
-				}, 1500);
+				}, 500);
 			}
 		};
 

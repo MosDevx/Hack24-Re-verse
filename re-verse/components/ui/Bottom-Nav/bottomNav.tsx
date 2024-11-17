@@ -10,7 +10,7 @@ import {
   IconMail
 } from "@tabler/icons-react";
 import Image from "next/image";
-import Placeholder from "@/public/Image/Placeholder.png";
+import Placeholder from "@/public/Image/Placeholder.png"
 
 export default function BottomNav() {
   const links = [
@@ -40,7 +40,7 @@ export default function BottomNav() {
       icon: (
         <IconDeviceGamepad className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "/trivia",
+      href: "/", //PvP to be placed here
     },
     {
       title: "Profile",
@@ -53,14 +53,14 @@ export default function BottomNav() {
 
   return (
     <div className="fixed bottom-0 w-full bg-gray-50 dark:bg-neutral-900 shadow-lg">
-      <div className="container mx-auto flex items-center justify-between px-4 py-2">
+      <div className="container mx-auto flex items-center justify-between px-4 py-0">
         {/* Profile Picture */}
         <div className="hidden md:block">
           <Image
-            src= {Placeholder}
+            src = {Placeholder}
             alt="Profile Picture"
-            width={42}
-            height={42}
+            width={40}
+            height={40}
             className="rounded-full"
           />
         </div>

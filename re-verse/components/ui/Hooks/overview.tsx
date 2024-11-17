@@ -30,25 +30,25 @@ const data = [
   {
     category: "Bible Trivia",
     title: "Engage with the Bible in a fun new way",
-    src: Image1,
+    src: "https://media.istockphoto.com/id/1307907411/photo/a-colorful-wooden-block-with-text-trivia-on-wooden-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=9qG53ZUyemkbZ867QjKt9P5wefh1Fzry8ga658oCV-Y=",
     content: <Link href="/trivia"></Link>,
   },
   {
     category: "Discipleship",
     title: "Learn, earn points and grow in your faith journey",
-    src: Image2,
+    src: "https://images.unsplash.com/photo-1629141650344-db693cfd6d48?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fERpc2NpcGxlc2hpcHxlbnwwfHwwfHx8MA%3D%3D",
     content: <Link href="/discipleship"></Link>,
   },
   {
     category: "Community",
     title: "Connect with champions reversing the trend with reVerse",
-    src: Image3,
+    src: "https://images.unsplash.com/photo-1529209076408-5a115ec9f1c6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Q29tbXVuaXR5fGVufDB8fDB8fHww",
     content: <Link href="/Communities"></Link>,
   },
   {
     category: "holyGPT",
     title: "Chat with the our AI powered bible-bot",
-    src: Image4,
-    content: <Link href="#"></Link>,
+    src: "https://media.istockphoto.com/id/1494104649/photo/ai-chatbot-artificial-intelligence-digital-concept.webp?a=1&b=1&s=612x612&w=0&k=20&c=bSNvWwiLdPpa57uxQdncwcpu9Xt-NJSsmIBMxNxLQfw=",
+    content: <Link href="/holyGPT"></Link>,
   },
 ];

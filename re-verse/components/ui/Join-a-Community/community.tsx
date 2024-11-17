@@ -19,7 +19,12 @@ function JoinCommunity() {
         </div>
       </div>
       <div className="w-full md:w-1/2 flex justify-center items-center">
-        <Image src={communityPic} alt="Community" className="w-full h-auto object-cover rounded-lg shadow-lg" />
+        <Image
+          src={communityPic} 
+          alt="Community"
+          width={500}
+          height={300}
+          className="w-full h-auto object-cover rounded-lg shadow-lg" />
       </div>
     </div>
   );

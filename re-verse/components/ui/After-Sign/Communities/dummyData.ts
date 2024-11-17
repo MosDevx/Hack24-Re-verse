@@ -6,7 +6,7 @@ export const dummyCommunities = [
       name: "Christian Teens ✅",
       members: 100,
       createdAt: "11.14.24",
-      profileImage: "/Image/Pray3.png", // Ensure this path exists or replace with an actual image URL
+      profileImage: "https://picsum.photos/seed/picsum/30", // Ensure this path exists or replace with an actual image URL
       activities: [
         {
           id: "a1",
@@ -33,7 +33,7 @@ export const dummyCommunities = [
       name: "Problem Solvers ✅",
       members: 75,
       createdAt: "11.14.24",
-      profileImage: "/Image/Pray1.png", // Ensure this path exists or replace with an actual image URL
+      profileImage:"https://picsum.photos/seed/picsum/30", // Ensure this path exists or replace with an actual image URL
       activities: [
         {
           id: "a3",
@@ -51,7 +51,7 @@ export const dummyCommunities = [
       "name": "Faith Builders ✅",
       "members": 120,
       "createdAt": "11.14.24",
-      "profileImage": "/Image/Pray6.png",
+      "profileImage": "https://picsum.photos/seed/picsum/30",
       "activities": [
         {
           "id": "a4",
@@ -78,7 +78,7 @@ export const dummyCommunities = [
       "name": "Light Bearers ✅",
       "members": 90,
       "createdAt": "11.15.24",
-      "profileImage": "/Image/Pray7.png",
+      "profileImage": "https://picsum.photos/seed/picsum/30",
       "activities": [
         {
           "id": "a6",
@@ -105,7 +105,7 @@ export const dummyCommunities = [
       "name": "Living Waters ✅",
       "members": 110,
       "createdAt": "11.16.24",
-      "profileImage": "/Image/Pray8.png",
+      "profileImage": "https://picsum.photos/seed/picsum/30",
       "activities": [
         {
           "id": "a8",
@@ -123,7 +123,7 @@ export const dummyCommunities = [
       "name": "Prayer Warriors ✅",
       "members": 70,
       "createdAt": "11.16.24",
-      "profileImage": "/Image/Pray9.png",
+      "profileImage": "https://picsum.photos/seed/picsum/30",
       "activities": [
         {
           "id": "a9",
@@ -141,7 +141,7 @@ export const dummyCommunities = [
       "name": "Hope Givers ✅",
       "members": 95,
       "createdAt": "11.16.24",
-      "profileImage": "/Image/Pray10.png",
+      "profileImage": "https://picsum.photos/seed/picsum/30",
       "activities": [
         {
           "id": "a10",
@@ -168,7 +168,7 @@ export const dummyCommunities = [
       "name": "Kingdom Builders ✅",
       "members": 85,
       "createdAt": "11.17.24",
-      "profileImage": "/Image/Pray11.png",
+      "profileImage": "https://picsum.photos/seed/picsum/30",
       "activities": [
         {
           "id": "a12",
@@ -186,7 +186,7 @@ export const dummyCommunities = [
       "name": "Graceful Hearts ✅",
       "members": 100,
       "createdAt": "11.17.24",
-      "profileImage": "/Image/Pray12.png",
+      "profileImage": "https://picsum.photos/seed/picsum/30",
       "activities": [
         {
           "id": "a13",
@@ -204,7 +204,7 @@ export const dummyCommunities = [
       "name": "Wisdom Seekers ✅",
       "members": 60,
       "createdAt": "11.17.24",
-      "profileImage": "/Image/Pray13.png",
+      "profileImage": "https://picsum.photos/seed/picsum/30",
       "activities": [
         {
           "id": "a14",
@@ -222,7 +222,7 @@ export const dummyCommunities = [
       "name": "Joyful Voices ✅",
       "members": 80,
       "createdAt": "11.17.24",
-      "profileImage": "/Image/Pray14.png",
+      "profileImage": "https://picsum.photos/seed/picsum/30",
       "activities": [
         {
           "id": "a15",
@@ -240,7 +240,7 @@ export const dummyCommunities = [
       "name": "Pathfinders ✅",
       "members": 65,
       "createdAt": "11.17.24",
-      "profileImage": "/Image/Pray15.png",
+      "profileImage": "https://picsum.photos/seed/picsum/30",
       "activities": [
         {
           "id": "a16",

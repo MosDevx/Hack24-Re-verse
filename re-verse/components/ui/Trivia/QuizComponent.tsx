@@ -66,7 +66,7 @@ import { updateUserTriviaScore } from '@/lib/reverse';
 			console.log("useranswmers",userAnswers);
 			return (
 				<div className="flex flex-col items-center justify-center h-screen">
-					<h1 className="text-4xl font-bold mb-4">Your Score: {score} out of {questions.length}</h1>
+					<h1 className="text-4xl font-bold mb-4">Your Score: {score} </h1>
 					<button 
 						onClick={handleSubmitScore} 
 						className="bg-blue-500 text-white p-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"

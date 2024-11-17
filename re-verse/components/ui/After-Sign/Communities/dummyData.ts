@@ -6,7 +6,7 @@ export const dummyCommunities = [
       name: "Christian Teens ✅",
       members: 100,
       createdAt: "11.14.24",
-      profileImage: "https://picsum.photos/seed/picsum/30", // Ensure this path exists or replace with an actual image URL
+      profileImage: "https://random-image-pepebigotes.vercel.app/api/random-image", // Ensure this path exists or replace with an actual image URL
       activities: [
         {
           id: "a1",
@@ -33,7 +33,7 @@ export const dummyCommunities = [
       "name": "Faith Builders ✅",
       "members": 120,
       "createdAt": "11.14.24",
-      "profileImage": "https://picsum.photos/seed/picsum/30",
+      "profileImage": "https://random-image-pepebigotes.vercel.app/api/random-image",
       "activities": [
         {
           "id": "a4",
@@ -60,7 +60,7 @@ export const dummyCommunities = [
       "name": "Prayer Warriors ✅",
       "members": 70,
       "createdAt": "11.16.24",
-      "profileImage": "https://picsum.photos/seed/picsum/30",
+      "profileImage": "https://random-image-pepebigotes.vercel.app/api/random-image",
       "activities": [
         {
           "id": "a9",
@@ -78,7 +78,7 @@ export const dummyCommunities = [
       "name": "Graceful Hearts ✅",
       "members": 100,
       "createdAt": "11.17.24",
-      "profileImage": "https://picsum.photos/seed/picsum/30",
+      "profileImage": "https://random-image-pepebigotes.vercel.app/api/random-image",
       "activities": [
         {
           "id": "a13",
@@ -96,7 +96,7 @@ export const dummyCommunities = [
       "name": "Wisdom Seekers ✅",
       "members": 60,
       "createdAt": "11.17.24",
-      "profileImage": "https://picsum.photos/seed/picsum/30",
+      "profileImage": "https://random-image-pepebigotes.vercel.app/api/random-image",
       "activities": [
         {
           "id": "a14",
@@ -114,7 +114,7 @@ export const dummyCommunities = [
       "name": "Joyful Voices ✅",
       "members": 80,
       "createdAt": "11.17.24",
-      "profileImage": "https://picsum.photos/seed/picsum/30",
+      "profileImage": "https://random-image-pepebigotes.vercel.app/api/random-image",
       "activities": [
         {
           "id": "a15",

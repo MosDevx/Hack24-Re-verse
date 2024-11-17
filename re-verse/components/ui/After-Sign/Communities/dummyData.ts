@@ -29,24 +29,6 @@ export const dummyCommunities = [
       ],
     },
     {
-      id: "2",
-      name: "Problem Solvers ✅",
-      members: 75,
-      createdAt: "11.14.24",
-      profileImage:"https://picsum.photos/seed/picsum/30", // Ensure this path exists or replace with an actual image URL
-      activities: [
-        {
-          id: "a3",
-          name: "Service Outreach",
-          participants: 50,
-          messages: 12,
-          description: "Community outreach to assist with local service projects and outreach.",
-          progress: "2/4 service events completed",
-          resources: ["Gloves", "Donation Supplies"],
-        },
-      ],
-    },
-    {
       "id": "3",
       "name": "Faith Builders ✅",
       "members": 120,
@@ -74,51 +56,6 @@ export const dummyCommunities = [
       ]
     },
     {
-      "id": "4",
-      "name": "Light Bearers ✅",
-      "members": 90,
-      "createdAt": "11.15.24",
-      "profileImage": "https://picsum.photos/seed/picsum/30",
-      "activities": [
-        {
-          "id": "a6",
-          "name": "Evangelism Training",
-          "participants": 40,
-          "messages": 18,
-          "description": "Sessions to equip members with effective evangelism strategies.",
-          "progress": "2/5 workshops completed",
-          "resources": ["Gospel Tracts", "Role-playing Guides"]
-        },
-        {
-          "id": "a7",
-          "name": "Scripture Memorization",
-          "participants": 35,
-          "messages": 10,
-          "description": "Group challenge to memorize key Bible verses.",
-          "progress": "10/20 verses memorized",
-          "resources": ["Memory Cards", "Bible App"]
-        }
-      ]
-    },
-    {
-      "id": "5",
-      "name": "Living Waters ✅",
-      "members": 110,
-      "createdAt": "11.16.24",
-      "profileImage": "https://picsum.photos/seed/picsum/30",
-      "activities": [
-        {
-          "id": "a8",
-          "name": "Discipleship Program",
-          "participants": 60,
-          "messages": 20,
-          "description": "Mentorship program focused on growing in faith and helping others.",
-          "progress": "4/8 sessions completed",
-          "resources": ["Workbook", "Mentor Guide"]
-        }
-      ]
-    },
-    {
       "id": "6",
       "name": "Prayer Warriors ✅",
       "members": 70,
@@ -133,51 +70,6 @@ export const dummyCommunities = [
           "description": "Focused prayer sessions for specific needs within the community.",
           "progress": "Daily prayers ongoing",
           "resources": ["Prayer List", "Scripture References"]
-        }
-      ]
-    },
-    {
-      "id": "7",
-      "name": "Hope Givers ✅",
-      "members": 95,
-      "createdAt": "11.16.24",
-      "profileImage": "https://picsum.photos/seed/picsum/30",
-      "activities": [
-        {
-          "id": "a10",
-          "name": "Charity Drives",
-          "participants": 70,
-          "messages": 22,
-          "description": "Organizing charity events to support the less fortunate.",
-          "progress": "1/3 events completed",
-          "resources": ["Donation Items", "Volunteer Roster"]
-        },
-        {
-          "id": "a11",
-          "name": "Encouragement Letters",
-          "participants": 40,
-          "messages": 12,
-          "description": "Writing and sending uplifting messages to people in need.",
-          "progress": "Ongoing",
-          "resources": ["Stationery", "Sample Letters"]
-        }
-      ]
-    },
-    {
-      "id": "8",
-      "name": "Kingdom Builders ✅",
-      "members": 85,
-      "createdAt": "11.17.24",
-      "profileImage": "https://picsum.photos/seed/picsum/30",
-      "activities": [
-        {
-          "id": "a12",
-          "name": "Church Renovation Project",
-          "participants": 40,
-          "messages": 15,
-          "description": "Volunteer group working on renovating church facilities.",
-          "progress": "Phase 2/4 completed",
-          "resources": ["Building Materials", "Volunteer List"]
         }
       ]
     },
@@ -235,24 +127,7 @@ export const dummyCommunities = [
         }
       ]
     },
-    {
-      "id": "12",
-      "name": "Pathfinders ✅",
-      "members": 65,
-      "createdAt": "11.17.24",
-      "profileImage": "https://picsum.photos/seed/picsum/30",
-      "activities": [
-        {
-          "id": "a16",
-          "name": "Youth Camps",
-          "participants": 45,
-          "messages": 30,
-          "description": "Planning and organizing faith-building outdoor camps.",
-          "progress": "Next camp scheduled",
-          "resources": ["Camping Gear", "Faith Journals"]
-        }
-      ]
-    }
+
     
   ];
   

@@ -1,14 +1,12 @@
-import firebaseConfig from "@/app/firebaseConfig";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { initializeApp } from "firebase/app";
+// import firebaseConfig from "@/app/firebaseConfig";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 // import { createUser } from "@/lib/reverse"; // Assuming createUser is in a file named "reverse.js"
 import {createUser} from "@/lib/reverse";
+import { auth,provider } from "@/lib/firebaseClient";    
 
 export default async function googleAuth() {
   try {
-    initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const provider = new GoogleAuthProvider();
+
     
     //request for additional  scopes for gender and dob
     provider.addScope("profile")

@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 
-import googleAuth from "@/components/ui/Auth/firebaseAuth";
-import {GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import {signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import Image from "next/image";
 import welcome from "@/public/images/welcome.png";
 import { auth,provider } from "@/lib/firebaseClient";    

@@ -1,9 +1,8 @@
 "use client";
 import React, { useState, FormEvent } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import firebaseConfig from "@/app/firebaseConfig"; // Adjust import based on your project structure
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import googleAuth from "@/components/ui/Auth/firebaseAuth"; // Adjust import based on your project structure
 import Loadinggif from "@/public/images/signup.jpg";
 import Image from "next/image";
@@ -11,6 +10,7 @@ import Link from "next/link";
 import {DateInput} from "@nextui-org/date-input"
 import { createUser } from "@/lib/reverse";
 import { createUsername } from "@/components/ui/Auth/firebaseAuth";
+import {auth} from "@/lib/firebaseClient";
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -25,8 +25,6 @@ const Signup: React.FC = () => {
   const username =createUsername(fname)
   const profilePicUrl ="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z' clip-rule='evenodd'/%3E%3C/svg%3E";
   // Initialize Firebase app
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

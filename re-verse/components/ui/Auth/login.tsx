@@ -31,7 +31,6 @@ const Login: React.FC = () => {
 
   async function google_auth(){
     const result = await signInWithPopup(auth, provider);
-    const user = result.user;
     
     // Redirect to profile page (optional)
     window.location.href = "/after-sign";
@@ -41,7 +40,7 @@ const Login: React.FC = () => {
     <div className="w-full flex flex-col md:flex-row items-center justify-center gap-8 p-8 bg-gradient-to-r from-gray-50 to-gray-200 dark:from-gray-900 dark:to-gray-700">
       <div className="max-w-md w-full mx-auto rounded md:rounded-2xl p-4 md:p-8 shadow-lg bg-white dark:bg-gray-800 border font-sans">
         <h2 className="font-semibold text-2xl text-gray-900 dark:text-gray-200">
-          Welcome back to re<span className="font-bold text-amber-600">Verse</span>
+          Welcome back to Re<span className="font-bold text-amber-600">Verse</span>
         </h2>
         <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
           Don't have an account?{" "}
@@ -90,7 +89,7 @@ const Login: React.FC = () => {
         </form>
       </div>
       <div className="w-full md:w-[35rem] flex justify-center items-center">
-        <Image src={welcome} alt="welcome back" className="w-full h-auto object-cover rounded-lg shadow-lg" />
+        <Image src={welcome} alt="welcome back" priority={true} className="w-full h-auto object-cover rounded-lg shadow-lg" />
       </div>
     </div>
   );

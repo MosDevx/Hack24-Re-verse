@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from "next/link";
-import communityPic from '@/public/images/Bible4.jpg'; 
+// import communityPic from '@/public/images/Bible4.jpg'; 
 
 function JoinCommunity() {
   return (
@@ -19,12 +19,12 @@ function JoinCommunity() {
         </div>
       </div>
       <div className="w-full md:w-1/2 flex justify-center items-center">
-        <Image
+        {/* <Image
           src={communityPic} 
           alt="Community"
           width={500}
           height={300}
-          className="w-full h-auto object-cover rounded-lg shadow-lg" />
+          className="w-full h-auto object-cover rounded-lg shadow-lg" /> */}
       </div>
     </div>
   );

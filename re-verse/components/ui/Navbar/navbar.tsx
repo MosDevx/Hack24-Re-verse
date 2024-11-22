@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import logo from '@/public/images/Reverse Logo.jpeg';
+import logo from '@/public/images/reverse-logo.webp';
 
 const Navbar: React.FC = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const Navbar: React.FC = () => {
         
         {/* Logo */}
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => router.push('/')}>
-          <Image src={logo} alt="Logo" width={40} height={40} className="h-10 w-10 rounded-full" />
+          <Image src={logo} alt="Logo" width={200} height={200}  className="h-10 w-10 rounded-full" />
           <span className="text-xl font-bold text-white tracking-wide">Re<span className='bg-clip-text text-transparent font-bold bg-gradient-to-r from-purple-600 to-blue-500'>Verse</span></span>
         </div>
         
